@@ -1,0 +1,42 @@
+networks:
+  red_restaurante:
+    driver: bridge
+    ipam: 
+      config:
+        - subnet: 172.20.0.0/16
+
+services:
+  frontend:
+    build:
+      context: ./airbnb-restaurante
+      dockerfile: Dockerfile
+    networks:
+      red_restaurante:
+        ipv4_address: 172.20.0.2
+    ports:
+    - "3000:80"
+    depends_on:
+      - api
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    networks:
+      red_restaurante:
+        ipv4_address: 172.20.0.3
+    ports:
+    - "4000:3000"
+    depends_on:
+      - database
+  
+  database:
+    image: postgres
+    networks:
+      red_restaurante:
+        ipv4_address: 172.20.0.4
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
