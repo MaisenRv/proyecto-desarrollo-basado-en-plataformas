@@ -1,11 +1,15 @@
+import Login from "./Login";
 
 function App() {
-
   return (
-    <>
-      <h1>Hola mundo</h1>
-    </>
-  )
+    <div>
+      {/* Si quieres puedes dejar el Hola mundo arriba */}
+      <h1>AIRBNB RESTAURANTES</h1>
+
+      {/* Aquí sí renderizamos el login */}
+      <Login />
+    </div>
+  );
 }
 
-export default App
+export default App;
