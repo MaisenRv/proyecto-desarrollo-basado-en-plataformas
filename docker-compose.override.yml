@@ -1,0 +1,29 @@
+services:
+  frontend:
+    build:
+      context: ./airbnb-restaurante
+      dockerfile: Dockerfile.dev
+    networks:
+      red_restaurante:
+        ipv4_address: 172.20.0.2
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./airbnb-restaurante:/app
+    - /app/node_modules
+    depends_on:
+      - api
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    networks:
+      red_restaurante:
+        ipv4_address: 172.20.0.3
+    ports:
+    - "4000:4000"
+    volumes:
+    - ./api:/app
+    - /app/node_modules
+    depends_on:
+      - database

@@ -1,9 +1,9 @@
 const env = {
-    "PORT": 3000,
+    "PORT": 4000,
     "CORS_CONFIG":{},
     "DATABASE":{
-        "USER":"postgres",
-        "HOST":"127.0.0.1",
+        "USER":"admin",
+        "HOST":"172.20.0.4",
         "DB_NAME":"air_restaurants",
         "PASSWORD":"root",
         "PORT":parseInt("5432")
