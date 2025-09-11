@@ -1,9 +1,9 @@
-// src/components/Login.jsx
+// src/components/Register.jsx
 import { useState } from "react";
 import Swal from "sweetalert2";
 import styled, { keyframes } from "styled-components";
 
-// 🎨 Estilos
+// 🎨 Reutilizamos estilos similares a Login
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -18,8 +18,7 @@ const Form = styled.form`
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
-  width: 380px;
-  z-index: 2;
+  width: 400px;
 `;
 
 const Title = styled.h2`
@@ -37,7 +36,6 @@ const Input = styled.input`
   border: 1px solid #d1d5db;
   border-radius: 10px;
   font-size: 1rem;
-  transition: border 0.2s, box-shadow 0.2s;
 
   &:focus {
     outline: none;
@@ -49,7 +47,7 @@ const Input = styled.input`
 const Button = styled.button`
   width: 100%;
   padding: 0.9rem;
-  background: #2563eb;
+  background: #16a34a;
   color: #ffffff;
   font-size: 1rem;
   border: none;
@@ -58,7 +56,7 @@ const Button = styled.button`
   transition: background 0.3s;
 
   &:hover {
-    background: #1e40af;
+    background: #15803d;
   }
 `;
 
@@ -81,12 +79,13 @@ const Spinner = styled.div`
   width: 50px;
   height: 50px;
   border: 4px solid #d1d5db;
-  border-top-color: #2563eb;
+  border-top-color: #16a34a;
   border-radius: 50%;
   animation: ${spin} 1s linear infinite;
 `;
 
-export default function Login() {
+export default function Register() {
+  const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -96,19 +95,21 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:4000/api/login", {
+      const response = await fetch("http://localhost:4000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ nombre, email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        Swal.fire("✅ Bienvenido", `Hola ${data.user.nombre}`, "success");
-        localStorage.setItem("token", data.token);
+        Swal.fire("✅ Registro exitoso", "Ya puedes iniciar sesión", "success");
+        setNombre("");
+        setEmail("");
+        setPassword("");
       } else {
         Swal.fire("❌ Error", data.message, "error");
       }
@@ -128,8 +129,14 @@ export default function Login() {
       )}
 
       <Form onSubmit={handleSubmit}>
-        <Title>AIRBNB RESTAURANTES</Title>
-        <Title>Inicia Sesión</Title>
+        <Title>Registrarse</Title>
+        <Input
+          type="text"
+          placeholder="Nombre completo"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          required
+        />
         <Input
           type="email"
           placeholder="Correo electrónico"
@@ -145,7 +152,7 @@ export default function Login() {
           required
         />
         <Button type="submit" disabled={loading}>
-          {loading ? "Cargando..." : "Entrar"}
+          {loading ? "Registrando..." : "Registrarse"}
         </Button>
       </Form>
     </Container>

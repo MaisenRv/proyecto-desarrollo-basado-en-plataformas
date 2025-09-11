@@ -1,13 +1,17 @@
-import Login from "./Login";
-import Boton from "./components/Boton";
+import { useState } from "react";
+import Login from "./login.jsx";
+import Register from "./components/register.jsx";
+
 function App() {
+  const [showRegister, setShowRegister] = useState(false);
+
   return (
     <div>
-      {/* Si quieres puedes dejar el Hola mundo arriba */}
-      <h1>AIRBNB RESTAURANTES</h1>
-      <Boton  propiedad={"hola"}  >  hpañ </Boton>
-      {/* Aquí sí renderizamos el login */}
-      <Login />
+      {showRegister ? (
+        <Register onSwitch={() => setShowRegister(false)} />
+      ) : (
+        <Login onSwitch={() => setShowRegister(true)} />
+      )}
     </div>
   );
 }
