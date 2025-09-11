@@ -1,10 +1,15 @@
-import { Router, Request,Response } from "express";
-import { getUsers } from "../services/user.service.js";
+import { Router} from "express";
+import Validations from "../middleware/Validations.middleware.js";
 
+import UserController from "../controllers/user.controller.js";
+
+
+const userController = new UserController();
 const userRouter = Router()
-userRouter.get("/", async (req:Request, res: Response)=>{
-    const users = await getUsers();
-    res.json(users);
-})
+
+userRouter.get("/", userController.getAllUsers);
+userRouter.post("/create",Validations.validateUser,userController.register);
+
+
 
 export default userRouter;

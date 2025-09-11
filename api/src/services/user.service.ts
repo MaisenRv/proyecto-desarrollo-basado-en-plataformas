@@ -1,8 +1,19 @@
-import pool from "./../config/database.js"
-import UserInterface from "./../interfaces/user.interface.js"
+import UserModel from "../models/User.model.js"
+import {UserInterface} from "../interfaces/user.interface.js";
+import { MessageInterface } from "../interfaces/message.interface.js";
 
+class UserService{
+  private userModel = new UserModel();
 
-export const getUsers = async (): Promise<UserInterface[]> => {
-  const result = await pool.query('SELECT * FROM "user"');
-  return result.rows;
-};
+  public async getAllUsers(): Promise<UserInterface[]> {
+    return this.userModel.getAllUsers();
+  }
+
+  // public async register(newUser:UserInterface): Promise<MessageInterface>{
+    // return this.userModel.
+  // }
+
+}
+
+export default UserService;
+

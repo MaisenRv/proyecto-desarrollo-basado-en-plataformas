@@ -1,4 +1,4 @@
-import Login from "./Login";
+import Login from "./login";
 import Boton from "./components/Boton";
 function App() {
   return (
