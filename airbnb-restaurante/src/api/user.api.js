@@ -1,22 +1,16 @@
 import { fetchWrapper } from "../utils/fetchWrapper.js";
-
-const API_URL = "http://localhost:3000/api/users";
+import { ENDPOINTS } from "./endpoints.js";
 
 export const userApi = {
   register: (data) =>
-    fetchWrapper(`${API_URL}/register`, {
+    fetchWrapper(ENDPOINTS.user.create, {
       method: "POST",
       body: JSON.stringify(data),
     }),
 
   login: (email, password) =>
-    fetchWrapper(`${API_URL}/login`, {
+    fetchWrapper(ENDPOINTS.user.login, {
       method: "POST",
       body: JSON.stringify({ email, password }),
-    }),
-
-  me: () =>
-    fetchWrapper(`${API_URL}/me`, {
-      method: "GET",
-    }),
+    })
 };

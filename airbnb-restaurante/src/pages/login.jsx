@@ -49,7 +49,7 @@ const Input = styled.input`
 const Button = styled.button`
   width: 100%;
   padding: 0.9rem;
-  background: #2563eb;
+  background: var(--vivid-sky-blue);
   color: #ffffff;
   font-size: 1rem;
   border: none;
@@ -79,7 +79,6 @@ const SwitchText = styled.p`
   }
 `;
 
-// 🔄 Animación para spinner
 const spin = keyframes`
   to { transform: rotate(360deg); }
 `;
@@ -168,7 +167,6 @@ export default function Login({ onSwitch }) {
           {loading ? "Cargando..." : "Entrar"}
         </Button>
 
-        {/* 🔹 Texto para cambiar a registro */}
         <SwitchText>
           ¿No tienes cuenta?{" "}
           <span ><Link to="/register">Regístrate aquí</Link></span>
