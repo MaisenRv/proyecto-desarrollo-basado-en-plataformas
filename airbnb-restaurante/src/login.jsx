@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import styled, { keyframes } from "styled-components";
-
+import { Link } from "react-router-dom";
 // 🎨 Estilos
 const Container = styled.div`
   display: flex;
@@ -171,7 +171,7 @@ export default function Login({ onSwitch }) {
         {/* 🔹 Texto para cambiar a registro */}
         <SwitchText>
           ¿No tienes cuenta?{" "}
-          <span onClick={onSwitch}>Regístrate aquí</span>
+          <span ><Link to="/register">Regístrate aquí</Link></span>
         </SwitchText>
       </Form>
     </Container>

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import styled, { keyframes } from "styled-components";
+import { Link } from "react-router-dom";
 
 // 🎨 Reutilizamos estilos similares a Login
 const Container = styled.div`
@@ -175,10 +176,9 @@ export default function Register({ onSwitch }) {
           {loading ? "Registrando..." : "Registrarse"}
         </Button>
 
-        {/* 🔹 Link para volver al Login */}
         <SwitchText>
           ¿Ya tienes cuenta?{" "}
-          <span onClick={onSwitch}>Inicia sesión aquí</span>
+          <span ><Link to="/login">logearse</Link></span>
         </SwitchText>
       </Form>
     </Container>
