@@ -8,9 +8,15 @@ export const userApi = {
       body: JSON.stringify(data),
     }),
 
-  login: (email, password) =>
+  login: (email, password, role) =>
     fetchWrapper(ENDPOINTS.user.login, {
       method: "POST",
-      body: JSON.stringify({ email, password }),
-    })
+      body: JSON.stringify({ email, password, role }),
+    }),
+
+  me: () =>
+    fetchWrapper(ENDPOINTS.user.me, {
+      method: "POST",
+      credentials: "include"
+    }),
 };

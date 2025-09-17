@@ -105,34 +105,14 @@ const Spinner = styled.div`
 export default function Login({ onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch("http://localhost:4000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        Swal.fire("✅ Bienvenido", `Hola ${data.user.nombre}`, "success");
-        localStorage.setItem("token", data.token);
-      } else {
-        Swal.fire("❌ Error", data.message, "error");
-      }
-    } catch (error) {
-      Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    } finally {
-      setLoading(false);
-    }
+    console.log(email)
+    console.log(password)
+    console.log(role)
   };
 
   return (
