@@ -3,6 +3,7 @@ import MainLayout from "./layout/MainLayout.jsx";
 
 import Login from "./login.jsx";
 import Register from "./components/register.jsx";
+import Home from "./pages/Home.jsx";
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
