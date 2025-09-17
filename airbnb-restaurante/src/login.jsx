@@ -26,7 +26,7 @@ const Title = styled.h2`
   text-align: center;
   font-size: 1.75rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: #1f2937;
 `;
 
@@ -62,6 +62,23 @@ const Button = styled.button`
   }
 `;
 
+const SwitchText = styled.p`
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+
+  span {
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 // 🔄 Animación para spinner
 const spin = keyframes`
   to { transform: rotate(360deg); }
@@ -86,7 +103,7 @@ const Spinner = styled.div`
   animation: ${spin} 1s linear infinite;
 `;
 
-export default function Login() {
+export default function Login({ onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -130,6 +147,7 @@ export default function Login() {
       <Form onSubmit={handleSubmit}>
         <Title>AIRBNB RESTAURANTES</Title>
         <Title>Inicia Sesión</Title>
+
         <Input
           type="email"
           placeholder="Correo electrónico"
@@ -137,6 +155,7 @@ export default function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <Input
           type="password"
           placeholder="Contraseña"
@@ -144,9 +163,16 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <Button type="submit" disabled={loading}>
           {loading ? "Cargando..." : "Entrar"}
         </Button>
+
+        {/* 🔹 Texto para cambiar a registro */}
+        <SwitchText>
+          ¿No tienes cuenta?{" "}
+          <span onClick={onSwitch}>Regístrate aquí</span>
+        </SwitchText>
       </Form>
     </Container>
   );

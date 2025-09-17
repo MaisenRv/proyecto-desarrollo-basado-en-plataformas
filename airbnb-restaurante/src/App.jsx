@@ -1,7 +1,7 @@
+
 import { useState } from "react";
-import Login from "./login";
+import Login from "./login.jsx";
 import Register from "./components/register.jsx";
-import Boton from "./components/Boton";
 
 function App() {
   const [showRegister, setShowRegister] = useState(false);
@@ -13,7 +13,6 @@ function App() {
       ) : (
         <Login onSwitch={() => setShowRegister(true)} />
       )}
-      <Boton />
     </div>
   );
 }

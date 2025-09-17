@@ -60,6 +60,23 @@ const Button = styled.button`
   }
 `;
 
+const SwitchText = styled.p`
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+
+  span {
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 // 🔄 Animación para spinner
 const spin = keyframes`
   to { transform: rotate(360deg); }
@@ -84,7 +101,7 @@ const Spinner = styled.div`
   animation: ${spin} 1s linear infinite;
 `;
 
-export default function Register() {
+export default function Register({ onSwitch }) {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -110,6 +127,7 @@ export default function Register() {
         setNombre("");
         setEmail("");
         setPassword("");
+        onSwitch(); // 🔹 vuelve al login tras registrarse
       } else {
         Swal.fire("❌ Error", data.message, "error");
       }
@@ -154,6 +172,12 @@ export default function Register() {
         <Button type="submit" disabled={loading}>
           {loading ? "Registrando..." : "Registrarse"}
         </Button>
+
+        {/* 🔹 Link para volver al Login */}
+        <SwitchText>
+          ¿Ya tienes cuenta?{" "}
+          <span onClick={onSwitch}>Inicia sesión aquí</span>
+        </SwitchText>
       </Form>
     </Container>
   );
