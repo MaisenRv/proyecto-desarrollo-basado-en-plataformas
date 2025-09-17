@@ -1,17 +1,24 @@
 export interface UserInterface{
     user_id: BigInteger,
-    username: String,
-    password: String,
-    email: String,
-    telefono: String | null,
-    created_at: String,
-    update_at: String
+    username: string,
+    password: string,
+    email: string,
+    telefono: string | null,
+    role:string | null
+    created_at: string,
+    update_at: string
 }
 export interface UserCreateInterface{
-    username: String,
-    password: String,
-    email: String,
-    telefono: String | null,
+    username: string,
+    password: string,
+    email: string,
+    telefono: string | null,
+    role: string
+}
+export interface UserLoginInterface{
+    username: string,
+    password: string,
+    role: string,
 }
 
 

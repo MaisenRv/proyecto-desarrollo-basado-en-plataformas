@@ -1,17 +1,14 @@
-import UserSchema from "./schemas/UserSchema.js";
 import { Request, Response, NextFunction } from "express";
+import { ZodType } from "zod";
 
-class Validations{
+export const validate = (schema: ZodType) =>
+    (req: Request, res: Response, next: NextFunction) => {
+        const result = schema.safeParse(req.body);
 
-    public static validateUser(req:Request, res:Response, next:NextFunction){
-        const result = UserSchema.safeParse(req.body);
-        if(!result.success){
-            res.status(400).json({error: result.error.issues});
+        if (!result.success) {
+            return res.status(400).json({ error: result.error.issues });
         }
+
         req.body = result.data;
         next();
-    }
-
-}
-
-export default Validations;
+    };

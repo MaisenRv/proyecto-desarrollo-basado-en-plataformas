@@ -1,3 +1,4 @@
 export interface MessageInterface{
-    msg: string
+    msg: string,
+    data: any
 }
