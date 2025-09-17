@@ -3,7 +3,7 @@ import MainLayout from "./layout/MainLayout.jsx";
 
 import Login from "./login.jsx";
 import Register from "./components/register.jsx";
-
+import Card from "./components/Card.jsx"; 
 function App() {
 
 
