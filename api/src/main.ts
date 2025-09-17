@@ -1,4 +1,3 @@
-import express, { Request, Response } from "express";
 import app from "./app.js"
 import env from "./config/env.js"
 
