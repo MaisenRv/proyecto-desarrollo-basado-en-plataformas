@@ -1,19 +1,21 @@
+import { Routes, Route } from "react-router-dom";
+import MainLayout from "./layout/MainLayout.jsx";
 
-import { useState } from "react";
 import Login from "./login.jsx";
 import Register from "./components/register.jsx";
 
 function App() {
-  const [showRegister, setShowRegister] = useState(false);
+
 
   return (
-    <div>
-      {showRegister ? (
-        <Register onSwitch={() => setShowRegister(false)} />
-      ) : (
-        <Login onSwitch={() => setShowRegister(true)} />
-      )}
-    </div>
+    <Routes>
+      <Route element={<MainLayout />}>
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+      </Route>
+    </Routes>
   );
 }
 

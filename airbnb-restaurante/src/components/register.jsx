@@ -11,6 +11,7 @@ const Container = styled.div`
   height: 100vh;
   background: #f3f4f6;
   position: relative;
+  box-sizing: border-box;
 `;
 
 const Form = styled.form`
@@ -36,6 +37,7 @@ const Input = styled.input`
   border: 1px solid #d1d5db;
   border-radius: 10px;
   font-size: 1rem;
+  
 
   &:focus {
     outline: none;
