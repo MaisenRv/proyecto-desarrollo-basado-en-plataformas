@@ -25,5 +25,5 @@ export interface RestaurantDeleteInterface{
 }
 
 export interface RestaurantGetInterface{
-  owner_id: number;
+  user_id: number;
 }

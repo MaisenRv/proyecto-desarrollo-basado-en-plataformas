@@ -8,7 +8,7 @@ import { authMiddleware } from "../middleware/Auth.middleware.js";
 const restaurantController = new RestaurantController();
 const restaurantRouter = Router();
 
-restaurantRouter.get(
+restaurantRouter.post(
     ROUTES.restaurants.list,
     authMiddleware,
     validate(RestaurantGetSchema),

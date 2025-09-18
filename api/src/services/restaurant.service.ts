@@ -6,8 +6,8 @@ import RestaurantModel from "../models/Restaurant.model.js";
 class RestaurantService {
     private restaurantModel = new RestaurantModel();
 
-    public async getAllRestaurants(ownerId:RestaurantGetInterface): Promise<RestaurantInterface[]> {
-        return await this.restaurantModel.getAllRestaurants(ownerId);
+    public async getAllRestaurants(userId:RestaurantGetInterface): Promise<RestaurantInterface[]> {
+        return await this.restaurantModel.getAllRestaurants(userId);
     }
     public async createRestaurant(newRestaurant:RestaurantCreateInterface):Promise<MessageInterface> {
         const result = await this.restaurantModel.createRestaurant(newRestaurant); 

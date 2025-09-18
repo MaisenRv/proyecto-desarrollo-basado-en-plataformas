@@ -24,5 +24,5 @@ export const RestaurantDeleteSchema = z.object({
 });
 
 export const RestaurantGetSchema = z.object({
-  owner_id: z.number("Debe ser un id valido")
+  user_id: z.number("Debe ser un id valido")
 });
