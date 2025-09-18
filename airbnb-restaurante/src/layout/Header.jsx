@@ -11,15 +11,15 @@ const Header = () => {
     const resetRouter = () =>{
         setRouterList(
             () => {
-                const newList = [<Link key="home" to="/"> Home |</Link>]
+                const newList = [<Link key="home" to="/"> Home </Link>]
 
                 if(!user){
-                    newList.push(<Link key="login" to="/login"> Login |</Link>)
-                    newList.push(<Link key="register" to="/register"> Register |</Link>)
+                    newList.push(<Link key="login" to="/login"> Login </Link>)
+                    newList.push(<Link key="register" to="/register"> Register </Link>)
                 }else{
-                    newList.push(<Link key="admin" to="/admin"> Admin |</Link>)
-                    newList.push(<Link key="delete" to="/delete"> delete restaurante |</Link>)
-                    newList.push(<Link key="recreategister" to="/create"> Crear restaurante |</Link>)
+                    newList.push(<Link key="admin" to="/admin"> Admin </Link>)
+                    newList.push(<Link key="delete" to="/delete"> delete restaurante </Link>)
+                    newList.push(<Link key="recreategister" to="/create"> Crear restaurante </Link>)
                 }
                 return newList
             }

@@ -22,7 +22,7 @@ export const userApi = {
 
   me: () =>
     fetchWrapper(ENDPOINTS.user.me, {
-      method: "POST",
+      method: "GET",
       credentials: "include"
     }),
 };

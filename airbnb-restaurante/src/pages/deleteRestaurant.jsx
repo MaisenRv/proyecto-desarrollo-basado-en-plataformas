@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import ".deleteandcreate.css";
+import "./deleteandcreate.css";
 
 export default function DeleteRestaurant() {
   const [restaurantId, setRestaurantId] = useState("");

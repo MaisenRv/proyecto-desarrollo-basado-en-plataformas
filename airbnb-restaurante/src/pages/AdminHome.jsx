@@ -6,7 +6,7 @@ const AdminHome = () => {
 
     return (
         <>
-            <h1>Esta es una ruta protegida {user}</h1>
+            <h1>Esta es una ruta protegida</h1>
         </>
     )    
 }
