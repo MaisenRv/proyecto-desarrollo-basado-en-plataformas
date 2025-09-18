@@ -1,8 +1,12 @@
 // src/components/Register.jsx
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { userApi } from "../api/user.api";
+import { AuthContext } from "../providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
+
 
 const Container = styled.div`
   display: flex;
@@ -89,14 +93,18 @@ const SwitchLink = styled.span`
 `;
 
 export default function Register({ onSwitch }) {
-  const [nombre, setNombre] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("customer");
+  const [role, setRole] = useState("consumer");
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault();   
+    const result = await userApi.register(username, password, email, role);
+    setUser(result.data.username)
+    navigate("/")
   };
 
   return (
@@ -105,9 +113,9 @@ export default function Register({ onSwitch }) {
         <Title>Registrarse</Title>
         <Input
           type="text"
-          placeholder="Nombre completo"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          placeholder="Nombre de usuario"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <Input
@@ -125,7 +133,7 @@ export default function Register({ onSwitch }) {
           required
         />
         <Select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="customer">Cliente</option>
+          <option value="consumer">Cliente</option>
           <option value="owner">Propietario</option>
         </Select>
         <Button type="submit">Registrarse</Button>

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import styled from "styled-components";
 import { userApi } from "../api/user.api";
 import { AuthContext } from "../providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -101,11 +102,13 @@ export default function Login({ onSwitch }) {
   const [role, setRole] = useState("customer");
 
   const { setUser } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await userApi.login(username,password,role)
     setUser(result.data.username)
+    navigate("/")
   };
 
   return (

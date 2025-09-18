@@ -14,7 +14,7 @@ const userRouter = Router()
 userRouter.get(ROUTES.users.list, userController.getAllUsers);
 userRouter.post(ROUTES.users.create, validate(UserCreateSchema),userController.register);
 userRouter.post(ROUTES.users.login, validate(UserLoginSchema),userController.login);
-userRouter.post(ROUTES.users.me,authMiddleware, (req:AuthRequest, res:Response) => {res.json(req.user)})
+userRouter.get(ROUTES.users.me,authMiddleware, (req:AuthRequest, res:Response) => {res.json(req.user)})
 
 
 export default userRouter;

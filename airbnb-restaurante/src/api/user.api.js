@@ -2,10 +2,16 @@ import { fetchWrapper } from "../utils/fetchWrapper.js";
 import { ENDPOINTS } from "./endpoints.js";
 
 export const userApi = {
-  register: (data) =>
+  register: (username, password, email, role) =>
     fetchWrapper(ENDPOINTS.user.create, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        email: email,
+        role:role,
+        telefono:null
+      }),
     }),
 
   login: (username, password, role) =>
@@ -16,7 +22,7 @@ export const userApi = {
 
   me: () =>
     fetchWrapper(ENDPOINTS.user.me, {
-      method: "POST",
+      method: "GET",
       credentials: "include"
     }),
 };
