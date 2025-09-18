@@ -150,7 +150,9 @@ export default function Register({ onSwitch }) {
       )}
 
       <Form onSubmit={handleSubmit}>
+        
         <Title>Registrarse</Title>
+        <Title>AIRBNB RESTAURANTES</Title>
         <Input
           type="text"
           placeholder="Nombre completo"
@@ -178,7 +180,7 @@ export default function Register({ onSwitch }) {
 
         <SwitchText>
           ¿Ya tienes cuenta?{" "}
-          <span ><Link to="/login">logearse</Link></span>
+          <span ><Link to="/login">Inicia Sesión</Link></span>
         </SwitchText>
       </Form>
     </Container>

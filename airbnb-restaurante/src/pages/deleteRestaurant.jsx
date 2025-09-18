@@ -1,0 +1,45 @@
+import { useState } from "react";
+import Swal from "sweetalert2";
+
+export default function DeleteRestaurant() {
+    const [restaurantId, setRestaurantId] = useState("");
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+
+    try {
+        
+        const res = await fetch(`http://localhost:3000/api/restaurants/${restaurantId}`, {
+        method: "DELETE",
+    }
+    );
+    if (res.ok) {
+        Swal.fire("🪣Restaurante eliminado correctamente","success");
+        setRestaurantId("");
+
+    } else {
+        Swal.fire("❌ Error",data.mesage || "Error al eliminar el restaurante","error");
+    }
+    } catch (error) {
+        Swal.fire("⚠️ Error", "No se pudo conectar con el servidor","error");
+    }
+    }
+    return (
+        <div className="page-container">
+            <h2>Eliminar restaurante</h2>
+            <form onSubmit={handleDelete} className="form">
+                <input
+                    type="text"
+                    placeholder="ID del restaurante"
+                    value={restaurantId}
+                    onChange={(e) => setRestaurantId(e.target.value)}
+                    required
+                />
+                <button type="submit">Eliminar Restaurante</button>
+            </form>
+        </div>
+
+    )
+}
+
