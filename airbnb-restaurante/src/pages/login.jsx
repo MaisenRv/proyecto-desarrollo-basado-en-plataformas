@@ -1,7 +1,9 @@
 // src/login.jsx
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import styled from "styled-components";
+import { userApi } from "../api/user.api";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Container = styled.div`
   display: flex;
@@ -94,33 +96,16 @@ const SwitchLink = styled.span`
 `;
 
 export default function Login({ onSwitch }) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("customer");
 
+  const { setUser } = useContext(AuthContext)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:4000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, role }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        Swal.fire("✅ Bienvenido", `Has iniciado como ${role}`, "success");
-        setEmail("");
-        setPassword("");
-        setRole("customer");
-      } else {
-        Swal.fire("❌ Error", data.message, "error");
-      }
-    } catch (error) {
-      Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    }
+    const result = await userApi.login(username,password,role)
+    setUser(result.data.username)
   };
 
   return (
@@ -128,10 +113,10 @@ export default function Login({ onSwitch }) {
       <Form onSubmit={handleSubmit}>
         <Title>Iniciar Sesión</Title>
         <Input
-          type="email"
-          placeholder="Correo electrónico"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Usuario"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <Input

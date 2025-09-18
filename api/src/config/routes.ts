@@ -11,6 +11,7 @@ const ROUTES = {
         base:"/restaurants",
         create: "/create",
         update: "/update",
+        delete: "/delete",
         list:"/"
     }
 };

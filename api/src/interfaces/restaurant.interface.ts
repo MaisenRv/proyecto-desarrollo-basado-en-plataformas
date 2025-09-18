@@ -19,3 +19,11 @@ export interface RestaurantCreateInterface {
   opening_hours: string;
   closing_hours: string;
 }
+
+export interface RestaurantDeleteInterface{
+  restaurant_id: number;
+}
+
+export interface RestaurantGetInterface{
+  owner_id: number;
+}

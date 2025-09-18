@@ -59,19 +59,16 @@ const Select = styled.select`
 `;
 
 const Button = styled.button`
-  width: 100%;
-  padding: 0.9rem;
-  background: var(--bittersweet);
-  color: #ffffff;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: #e85b52;
-  }
+width: 100%;
+padding: 0.9rem;
+background: var(--bittersweet);
+color: #ffffff;
+font-size: 1rem;
+font-weight: bold;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+transition: background 0.3s;
 `;
 
 const SwitchText = styled.p`
@@ -100,28 +97,6 @@ export default function Register({ onSwitch }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch("http://localhost:4000/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, email, password, role }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        Swal.fire("✅ Registro exitoso", "Ya puedes iniciar sesión", "success");
-        setNombre("");
-        setEmail("");
-        setPassword("");
-        setRole("customer");
-        onSwitch(); 
-      } else {
-        Swal.fire("❌ Error", data.message, "error");
-      }
-    } catch (error) {
-      Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    }
   };
 
   return (

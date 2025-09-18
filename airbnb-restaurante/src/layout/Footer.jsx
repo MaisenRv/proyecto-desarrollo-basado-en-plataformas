@@ -1,33 +1,20 @@
+// src/components/Footer.jsx
 import styled from "styled-components";
 
 const FooterContainer = styled.footer`
-  background: #212738; /* raisin-black */
-  color: #edf2ef; /* antiflash-white */
+  background: #1f2937; /* gris oscuro */
+  color: #f3f4f6; /* texto claro */
   text-align: center;
   padding: 1rem;
   margin-top: auto;
   font-size: 0.9rem;
-  border-top: 3px solid #f97068; /* bittersweet */
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-
-  p {
-    margin: 0;
-    transition: color 0.3s ease;
-  }
-
-  p:hover {
-    color: #57c4e5; /* vivid-sky-blue */
-  }
+  border-top: 2px solid #2563eb; /* línea superior azul */
 `;
 
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>
-        © {new Date().getFullYear()} Restaurantes App. Todos los derechos
-        reservados.
-      </p>
+      <p>© {new Date().getFullYear()} Restaurantes App. Todos los derechos reservados.</p>
     </FooterContainer>
   );
 };
