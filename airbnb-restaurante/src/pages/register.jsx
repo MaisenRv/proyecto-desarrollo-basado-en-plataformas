@@ -72,7 +72,7 @@ font-weight: bold;
 border: none;
 border-radius: 10px;
 cursor: pointer;
-transition: background 0.3s;
+transition: background 0.3s;4
 `;
 
 const SwitchText = styled.p`

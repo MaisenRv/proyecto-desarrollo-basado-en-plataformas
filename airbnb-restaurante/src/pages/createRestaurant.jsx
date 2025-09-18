@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
+import "./deleteandcreate.css";
+
 
 export default function CreateRestaurant() {
   const [nombre, setNombre] = useState("");
@@ -34,14 +36,15 @@ export default function CreateRestaurant() {
 
   return (
     <div className="page-container">
-      <h2>Crear restaurante</h2>
-      <form onSubmit={handleSubmit} className="form">
+      <h2 className="title">Crear restaurante</h2>
+      <form onSubmit={handleSubmit} className="form-container">
         <input
           type="text"
           placeholder="Nombre del restaurante"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
           required
+          className="input"
         />
         <input
           type="text"
@@ -49,6 +52,7 @@ export default function CreateRestaurant() {
           value={direccion}
           onChange={(e) => setDireccion(e.target.value)}
           required
+          className="input"
         />
         <input
           type="text"
@@ -56,8 +60,11 @@ export default function CreateRestaurant() {
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
           required
+          className="input"
         />
-        <button type="submit">Crear Restaurante</button>
+        <button type="submit" className="btn-primary">
+          Crear Restaurante
+        </button>
       </form>
     </div>
   );
