@@ -18,3 +18,11 @@ export const RestaurantUpdateSchema = z.object({
   closing_hours: z.string(),
   is_active: z.boolean().default(true),
 });
+
+export const RestaurantDeleteSchema = z.object({
+  restaurant_id: z.number("Debe ser un id valido")
+});
+
+export const RestaurantGetSchema = z.object({
+  owner_id: z.number("Debe ser un id valido")
+});

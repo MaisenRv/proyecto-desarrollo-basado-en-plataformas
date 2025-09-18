@@ -1,11 +1,15 @@
 import pool from "../config/database.js";
-import { RestaurantInterface, RestaurantCreateInterface } from "../interfaces/restaurant.interface.js";
+import { RestaurantInterface, RestaurantCreateInterface, RestaurantDeleteInterface,RestaurantGetInterface } from "../interfaces/restaurant.interface.js";
 import { QueryResult } from "pg";
 import AppError from "../utils/AppError.js";
+import { MessageInterface } from "../interfaces/message.interface.js";
 
 class RestaurantModel {
-    public async getAllRestaurants(): Promise<RestaurantInterface[]> {
-        const result: QueryResult = await pool.query('SELECT * FROM restaurant');
+    public async getAllRestaurants(ownerId:RestaurantGetInterface): Promise<RestaurantInterface[]> {
+        const result: QueryResult = await pool.query(
+            'SELECT * FROM restaurant WHERE owner_id = $1',
+            [ownerId.owner_id]
+        );
         return result.rows;
     }
 
@@ -39,13 +43,16 @@ class RestaurantModel {
         }finally {
             client.release();
         }
+    }
 
 
-
-        const result: QueryResult = await pool.query(
-            'INSERT INTO restaurant(owner_id,name,description,address,opening_hours,closing_hours) VALUES($1,$2,$3,$4,$5,$6)',
-
+    public async deleteRestaurant(restaurantId: RestaurantDeleteInterface):Promise<MessageInterface>{
+        const result = await pool.query(
+            'DELETE FROM restaurant WHERE restaurant_id = $1',
+            [restaurantId.restaurant_id]
         );
+
+        return { msg: "Borrado" ,data:result};
     }
 
 }

@@ -1,13 +1,13 @@
 import { MessageInterface } from "../interfaces/message.interface.js";
-import { RestaurantCreateInterface, RestaurantInterface } from "../interfaces/restaurant.interface.js";
+import { RestaurantCreateInterface, RestaurantInterface,RestaurantDeleteInterface,RestaurantGetInterface } from "../interfaces/restaurant.interface.js";
 import RestaurantModel from "../models/Restaurant.model.js";
 
 
 class RestaurantService {
     private restaurantModel = new RestaurantModel();
 
-    public async getAllRestaurants(): Promise<RestaurantInterface[]> {
-        return await this.restaurantModel.getAllRestaurants();
+    public async getAllRestaurants(ownerId:RestaurantGetInterface): Promise<RestaurantInterface[]> {
+        return await this.restaurantModel.getAllRestaurants(ownerId);
     }
     public async createRestaurant(newRestaurant:RestaurantCreateInterface):Promise<MessageInterface> {
         const result = await this.restaurantModel.createRestaurant(newRestaurant); 
@@ -17,6 +17,10 @@ class RestaurantService {
         }
         return message;
     }   
+
+    public async deleteRestaurant(restaurantId: RestaurantDeleteInterface):Promise<MessageInterface> {
+        return await this.restaurantModel.deleteRestaurant(restaurantId);
+    }
 
 }
 

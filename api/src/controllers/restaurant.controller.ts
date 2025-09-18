@@ -6,7 +6,7 @@ class RestaurantController {
 
     public getAllRestaurats = async (req: Request, res: Response) => {
         try {
-            const restaurants = await this.restaurantService.getAllRestaurants();
+            const restaurants = await this.restaurantService.getAllRestaurants(req.body);
             if (restaurants.length == 0) {
                 res.status(200).json({ restaurants: "No existen restaurantes en la base de datos" })
             }
@@ -18,15 +18,23 @@ class RestaurantController {
     }
 
 
-    public createRestaurant = async (req: Request, res: Response, next:NextFunction) => {
+    public createRestaurant = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const restaurant = await this.restaurantService.createRestaurant(req.body);
             res.status(200).json({ restaurant })
         } catch (error) { next(error); }
     }
 
-    public updateRestaurant() {
+    public updateRestaurant = async (req: Request, res: Response, next:NextFunction) => {
+        try {
 
+        } catch (error) { next(error); }
+    }
+
+    public deleteRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            return this.restaurantService.deleteRestaurant(req.body);
+        } catch (error) { next(error); }
     }
 }
 

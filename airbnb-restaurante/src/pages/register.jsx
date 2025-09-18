@@ -114,31 +114,6 @@ export default function Register({ onSwitch }) {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const response = await fetch("http://localhost:4000/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nombre, email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        Swal.fire("✅ Registro exitoso", "Ya puedes iniciar sesión", "success");
-        setNombre("");
-        setEmail("");
-        setPassword("");
-        onSwitch(); // 🔹 vuelve al login tras registrarse
-      } else {
-        Swal.fire("❌ Error", data.message, "error");
-      }
-    } catch (error) {
-      Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (

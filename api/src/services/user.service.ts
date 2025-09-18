@@ -18,7 +18,7 @@ class UserService {
     const token = jwt.sign(
       { user_id: result.user_id, role: result.role },
       env.JWT_SECRET,
-      { expiresIn: "1m" }
+      { expiresIn: "15m" }
     )
     const message: MessageInterface = {
       msg: "Usuario creado exitosamente",
@@ -39,7 +39,7 @@ class UserService {
       const token = jwt.sign(
         { user_id: result.user_id, role: result.role },
         env.JWT_SECRET,
-        { expiresIn: "1m" }
+        { expiresIn: "15m" }
       )
 
 
