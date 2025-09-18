@@ -8,14 +8,14 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #f3f4f6;
+  background: var(--antiflash-white);
 `;
 
 const Form = styled.form`
   background: #ffffff;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
   width: 400px;
 `;
 
@@ -24,21 +24,21 @@ const Title = styled.h2`
   font-size: 1.75rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  color: #1f2937;
+  color: var(--raisin-black);
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 92%;
   padding: 0.9rem;
   margin-bottom: 1rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--vivid-sky-blue);
   border-radius: 10px;
   font-size: 1rem;
 
   &:focus {
     outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+    border-color: var(--bittersweet);
+    box-shadow: 0 0 6px rgba(249, 112, 104, 0.4);
   }
 `;
 
@@ -46,30 +46,32 @@ const Select = styled.select`
   width: 100%;
   padding: 0.9rem;
   margin-bottom: 1rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--vivid-sky-blue);
   border-radius: 10px;
   font-size: 1rem;
 
   &:focus {
     outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+    border-color: var(--bittersweet);
+    box-shadow: 0 0 6px rgba(249, 112, 104, 0.4);
   }
 `;
 
 const Button = styled.button`
   width: 100%;
   padding: 0.9rem;
-  background: #2563eb;
+  background: var(--bittersweet);
   color: #ffffff;
   font-size: 1rem;
+  font-weight: bold;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s;
 
   &:hover {
-    background: #1e40af;
+    background: var(--pear);
+    color: var(--raisin-black);
   }
 `;
 
@@ -77,14 +79,16 @@ const SwitchText = styled.p`
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
+  color: var(--raisin-black);
 `;
 
 const SwitchLink = styled.span`
-  color: #2563eb;
+  color: var(--vivid-sky-blue);
   cursor: pointer;
   font-weight: bold;
 
   &:hover {
+    color: var(--bittersweet);
     text-decoration: underline;
   }
 `;

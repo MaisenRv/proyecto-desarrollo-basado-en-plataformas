@@ -1,18 +1,15 @@
 // src/components/Register.jsx
 import { useState } from "react";
 import Swal from "sweetalert2";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-// 🎨 Reutilizamos estilos similares a Login
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #f3f4f6;
-  position: relative;
-  box-sizing: border-box;
+  background: var(--antiflash-white);
 `;
 
 const Form = styled.form`
@@ -28,29 +25,43 @@ const Title = styled.h2`
   font-size: 1.75rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  color: #1f2937;
+  color: var(--raisin-black);
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 92%;
   padding: 0.9rem;
   margin-bottom: 1rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--vivid-sky-blue);
   border-radius: 10px;
   font-size: 1rem;
-  
 
   &:focus {
     outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+    border-color: var(--vivid-sky-blue);
+    box-shadow: 0 0 6px rgba(87, 196, 229, 0.5);
+  }
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 0.9rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--vivid-sky-blue);
+  border-radius: 10px;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: var(--vivid-sky-blue);
+    box-shadow: 0 0 6px rgba(87, 196, 229, 0.5);
   }
 `;
 
 const Button = styled.button`
   width: 100%;
   padding: 0.9rem;
-  background: #16a34a;
+  background: var(--bittersweet);
   color: #ffffff;
   font-size: 1rem;
   border: none;
@@ -59,7 +70,7 @@ const Button = styled.button`
   transition: background 0.3s;
 
   &:hover {
-    background: #15803d;
+    background: #e85b52;
   }
 `;
 
@@ -67,60 +78,33 @@ const SwitchText = styled.p`
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
-  color: #374151;
+  color: var(--raisin-black);
+`;
 
-  span {
-    color: #2563eb;
-    cursor: pointer;
-    font-weight: bold;
+const SwitchLink = styled.span`
+  color: var(--vivid-sky-blue);
+  cursor: pointer;
+  font-weight: bold;
 
-    &:hover {
-      text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
   }
-`;
-
-// 🔄 Animación para spinner
-const spin = keyframes`
-  to { transform: rotate(360deg); }
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 3;
-`;
-
-const Spinner = styled.div`
-  width: 50px;
-  height: 50px;
-  border: 4px solid #d1d5db;
-  border-top-color: #16a34a;
-  border-radius: 50%;
-  animation: ${spin} 1s linear infinite;
 `;
 
 export default function Register({ onSwitch }) {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState("customer");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:4000/api/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nombre, email, password }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, email, password, role }),
       });
 
       const data = await response.json();
@@ -130,29 +114,20 @@ export default function Register({ onSwitch }) {
         setNombre("");
         setEmail("");
         setPassword("");
-        onSwitch(); // 🔹 vuelve al login tras registrarse
+        setRole("customer");
+        onSwitch(); 
       } else {
         Swal.fire("❌ Error", data.message, "error");
       }
     } catch (error) {
       Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <Container>
-      {loading && (
-        <Overlay>
-          <Spinner />
-        </Overlay>
-      )}
-
       <Form onSubmit={handleSubmit}>
-        
         <Title>Registrarse</Title>
-        <Title>AIRBNB RESTAURANTES</Title>
         <Input
           type="text"
           placeholder="Nombre completo"
@@ -174,13 +149,15 @@ export default function Register({ onSwitch }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button type="submit" disabled={loading}>
-          {loading ? "Registrando..." : "Registrarse"}
-        </Button>
+        <Select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="customer">Cliente</option>
+          <option value="owner">Propietario</option>
+        </Select>
+        <Button type="submit">Registrarse</Button>
 
         <SwitchText>
           ¿Ya tienes cuenta?{" "}
-          <span ><Link to="/login">Inicia Sesión</Link></span>
+          <SwitchLink><Link to="/login">Inicia Sesión</Link></SwitchLink>
         </SwitchText>
       </Form>
     </Container>

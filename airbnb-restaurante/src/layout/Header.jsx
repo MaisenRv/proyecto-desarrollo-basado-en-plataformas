@@ -1,17 +1,17 @@
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+import "./Header.css";
 
 const Header = () => {
-    return (
-        <header>
-            <nav>
-                <Link to="/">Home</Link> |{" "}
-                <Link to="/login">Login</Link> |{" "}
-                <Link to="/register">Register</Link> |{" "}
-                <Link to="/admin">Admin</Link> |{" "}
-            </nav>
-        </header>
-    )
+  return (
+    <header className="header">
+      <nav className="nav">
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/login" className="nav-link">Login</Link>
+        <Link to="/register" className="nav-link">Register</Link>
+        <Link to="/admin" className="nav-link">Admin</Link>
+      </nav>
+    </header>
+  );
+};
 
-}
-
-export default Header
+export default Header;
