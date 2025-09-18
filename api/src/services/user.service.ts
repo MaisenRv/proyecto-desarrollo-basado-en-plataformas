@@ -15,7 +15,19 @@ class UserService {
   public async register(newUser: UserCreateInterface): Promise<MessageInterface> {
     newUser.password = await Hash.passwordToHash(newUser.password);
     const result = await this.userModel.createUser(newUser);
-    const message: MessageInterface = { msg: "Usuario creado exitosamente", data: result };
+    const token = jwt.sign(
+      { user_id: result.user_id, role: result.role },
+      env.JWT_SECRET,
+      { expiresIn: "1m" }
+    )
+    const message: MessageInterface = {
+      msg: "Usuario creado exitosamente",
+      data: {
+        auth_token: token,
+        username: result.username
+      }
+    };
+    
     return message;
   }
 

@@ -20,7 +20,14 @@ class UserController {
     public register = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await this.userService.register(req.body);
-            res.status(201).json(result);
+            res.cookie("auth_token", result.data.auth_token,
+                {
+                    httpOnly: true,
+                    sameSite: "strict",
+                    maxAge: 60
+                }
+            );
+            res.status(200).json({ msg: result.msg, data: { username: result.data.username } });
         } catch (error) { next(error); }
     }
 

@@ -43,7 +43,7 @@ class UserModel {
                 [userId]
             );
             await client.query("COMMIT");
-
+            user.role = newUser.role;
             return user!;
         } catch (error:any) {
             await client.query("ROLLBACK");

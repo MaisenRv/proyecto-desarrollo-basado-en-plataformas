@@ -10,6 +10,7 @@ const ROUTES = {
     restaurants:{
         base:"/restaurants",
         create: "/create",
+        update: "/update",
         list:"/"
     }
 };
