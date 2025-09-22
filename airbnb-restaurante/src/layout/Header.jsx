@@ -14,7 +14,6 @@ const HeaderStyled = styled.header`
 `
 const NavStyled = styled.nav`
     display: flex;
-    justify-content: center;
     gap: 1.5rem;
 `
 

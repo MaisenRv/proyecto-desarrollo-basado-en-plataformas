@@ -1,7 +1,18 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
-import "./deleteandcreate.css";
+import styled from "styled-components";
+import Form from "../components/Form";
+import Input from "../components/Input";
+import Boton from "../components/Boton";
 
+
+
+const Title = styled.h2`
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: var(--raisin-black);
+`;
 
 export default function CreateRestaurant() {
   const [nombre, setNombre] = useState("");
@@ -11,61 +22,36 @@ export default function CreateRestaurant() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:4000/api/restaurantes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nombre, direccion, telefono }),
-      });
-
-      if (res.ok) {
-        Swal.fire("✅ Restaurante creado", "El restaurante ha sido creado exitosamente", "success");
-        setNombre("");
-        setDireccion("");
-        setTelefono("");
-      } else {
-        const data = await res.json();
-        Swal.fire("❌ Error", data.message || "Error al crear el restaurante", "error");
-      }
-    } catch (error) {
-      Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    }
   };
 
   return (
-    <div className="page-container">
-      <h2 className="title">Crear restaurante</h2>
-      <form onSubmit={handleSubmit} className="form-container">
-        <input
-          type="text"
-          placeholder="Nombre del restaurante"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          required
-          className="input"
-        />
-        <input
-          type="text"
-          placeholder="Dirección"
-          value={direccion}
-          onChange={(e) => setDireccion(e.target.value)}
-          required
-          className="input"
-        />
-        <input
-          type="text"
-          placeholder="Teléfono"
-          value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
-          required
-          className="input"
-        />
-        <button type="submit" className="btn-primary">
-          Crear Restaurante
-        </button>
-      </form>
-    </div>
+    <Form handleSubmit={handleSubmit} className="form-container">
+      <Title>Crear restaurante</Title>
+      <Input
+        type="text"
+        placeholder="Nombre del restaurante"
+        value={nombre}
+        onChange={(e) => setNombre(e.target.value)}
+        required
+        className="input"
+      />
+      <Input
+        type="text"
+        placeholder="Dirección"
+        value={direccion}
+        onChange={(e) => setDireccion(e.target.value)}
+        required
+        className="input"
+      />
+      <Input
+        type="text"
+        placeholder="Teléfono"
+        value={telefono}
+        onChange={(e) => setTelefono(e.target.value)}
+        required
+        className="input"
+      />
+      <Boton type="submit"> Crear Restaurante </Boton>
+    </Form>
   );
 }
