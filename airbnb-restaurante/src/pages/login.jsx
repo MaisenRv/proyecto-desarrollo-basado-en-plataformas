@@ -1,26 +1,13 @@
-// src/login.jsx
 import { useState, useContext } from "react";
-import Swal from "sweetalert2";
 import styled from "styled-components";
 import { userApi } from "../api/user.api";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: var(--antiflash-white);
-`;
-
-const Form = styled.form`
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
-  width: 400px;
-`;
+import Boton from "../components/Boton";
+import Anchor from "../components/Anchor";
+import Form from "../components/Form";
+import Input from "../components/Input";
 
 const Title = styled.h2`
   text-align: center;
@@ -28,21 +15,6 @@ const Title = styled.h2`
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: var(--raisin-black);
-`;
-
-const Input = styled.input`
-  width: 92%;
-  padding: 0.9rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--vivid-sky-blue);
-  border-radius: 10px;
-  font-size: 1rem;
-
-  &:focus {
-    outline: none;
-    border-color: var(--bittersweet);
-    box-shadow: 0 0 6px rgba(249, 112, 104, 0.4);
-  }
 `;
 
 const Select = styled.select`
@@ -60,24 +32,6 @@ const Select = styled.select`
   }
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 0.9rem;
-  background: var(--bittersweet);
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: var(--pear);
-    color: var(--raisin-black);
-  }
-`;
-
 const SwitchText = styled.p`
   text-align: center;
   margin-top: 1rem;
@@ -85,61 +39,51 @@ const SwitchText = styled.p`
   color: var(--raisin-black);
 `;
 
-const SwitchLink = styled.span`
-  color: var(--vivid-sky-blue);
-  cursor: pointer;
-  font-weight: bold;
 
-  &:hover {
-    color: var(--bittersweet);
-    text-decoration: underline;
-  }
-`;
-
-export default function Login({ onSwitch }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("customer");
+export default function Login() {
+  const [loginState, setLoginState] = useState({
+    username: "",
+    password: "",
+    role: "consumer"
+  })
 
   const { setUser } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await userApi.login(username,password,role)
+    const result = await userApi.login(loginState.username, loginState.password, loginState.role)
     setUser(result.data.username)
     navigate("/")
   };
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <Title>Iniciar Sesión</Title>
-        <Input
-          type="text"
-          placeholder="Usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <Input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <Select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="customer">Cliente</option>
-          <option value="owner">Propietario</option>
-        </Select>
-        <Button type="submit">Ingresar</Button>
+    <Form handleSubmit={handleSubmit}>
+      <Title>Iniciar Sesión</Title>
+      <Input
+        type="text"
+        placeholder="Usuario"
+        value={loginState.username}
+        onChange={(e) => setLoginState(prev => ({ ...prev, username: e.target.value }))}
+        required
+      />
+      <Input
+        type="password"
+        placeholder="Contraseña"
+        value={loginState.password}
+        onChange={(e) => setLoginState(prev => ({ ...prev, password: e.target.value }))}
+        required
+      />
+      <Select value={loginState.role} onChange={(e) => setLoginState(prev =>({...prev,role:e.target.value}))}>
+        <option value="consumer">Cliente</option>
+        <option value="owner">Propietario</option>
+      </Select>
+      <Boton type="submit">Ingresar</Boton>
 
-        <SwitchText>
-          ¿No tienes cuenta?{" "}
-          <SwitchLink onClick={onSwitch}>Regístrate aquí</SwitchLink>
-        </SwitchText>
-      </Form>
-    </Container>
+      <SwitchText>
+        ¿No tienes cuenta?{" "}
+        <Anchor to="/register">Regístrate aquí</Anchor>
+      </SwitchText>
+    </Form>
   );
 }

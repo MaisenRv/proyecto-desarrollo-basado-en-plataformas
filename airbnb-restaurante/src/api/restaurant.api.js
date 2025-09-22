@@ -2,14 +2,14 @@ import { fetchWrapper } from "../utils/fetchWrapper";
 import { ENDPOINTS } from "./endpoints";
 
 export const restaurantAPI = {
-    getAll: (owner_id)=>{
+    getAll: (user_id) =>
         fetchWrapper(
             ENDPOINTS.restaurant.list,
             {
-                method: "GET",
-                body: JSON.stringify(owner_id),
+                method: "POST",
+                body: JSON.stringify({ user_id }),
                 credentials: "include"
             }
         )
-    }
+
 }

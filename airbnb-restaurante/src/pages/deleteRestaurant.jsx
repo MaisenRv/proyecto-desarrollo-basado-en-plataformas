@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Swal from "sweetalert2";
 import "./deleteandcreate.css";
 
 export default function DeleteRestaurant() {
@@ -8,21 +7,6 @@ export default function DeleteRestaurant() {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await fetch(`http://localhost:3000/api/restaurants/${restaurantId}`, {
-        method: "DELETE",
-      });
-
-      if (res.ok) {
-        Swal.fire("🪣 Restaurante eliminado correctamente", "", "success");
-        setRestaurantId("");
-      } else {
-        const data = await res.json();
-        Swal.fire("❌ Error", data.message || "Error al eliminar el restaurante", "error");
-      }
-    } catch (error) {
-      Swal.fire("⚠️ Error", "No se pudo conectar con el servidor", "error");
-    }
   };
 
   return (

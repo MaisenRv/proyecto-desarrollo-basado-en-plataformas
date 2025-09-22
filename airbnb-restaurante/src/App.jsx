@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 import AdminHome from "./pages/AdminHome.jsx";
 import DeleteRestaurant from "./pages/deleteRestaurant.jsx";
 import CreateRestaurant from "./pages/createRestaurant.jsx";
+import MeRestaurants from "./pages/MeRestaurants.jsx";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/admin" element={<PrivateRoute><AdminHome/></PrivateRoute>} />
         <Route path="/delete" element={<PrivateRoute><DeleteRestaurant/></PrivateRoute>}  />
         <Route path="/create" element={<PrivateRoute><CreateRestaurant/></PrivateRoute>}  />
+        <Route path="/restaurants" element={<PrivateRoute><MeRestaurants/></PrivateRoute>}  />
       </Route>
     </Routes>
   );

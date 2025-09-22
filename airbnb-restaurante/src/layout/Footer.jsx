@@ -2,13 +2,14 @@
 import styled from "styled-components";
 
 const FooterContainer = styled.footer`
-  background: #1f2937; /* gris oscuro */
-  color: #f3f4f6; /* texto claro */
+  background: var(--raisin-black); 
+  color: var(--antiflash-white); 
   text-align: center;
   padding: 1rem;
   margin-top: auto;
   font-size: 0.9rem;
-  border-top: 2px solid #2563eb; /* línea superior azul */
+  border-top: 1px solid var(--vivid-sky-blue); 
+  box-sizing: border-box;
 `;
 
 const Footer = () => {

@@ -1,25 +1,54 @@
 import { Link } from "react-router-dom"
 import { AuthContext } from "../providers/AuthProvider"
 import { useContext, useEffect, useState } from "react"
-import "./Header.css"
+import styled from "styled-components"
+
+const HeaderStyled = styled.header`
+    background: var(--raisin-black);
+    padding: 1rem 2rem;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+`
+const NavStyled = styled.nav`
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+`
+
+const AStyled = styled(Link)`
+    color: var(--antiflash-white);
+    font-size: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    &:hover{
+        color: var(--vivid-sky-blue); 
+        transform: scale(1.05);
+    }
+`
+
 
 const Header = () => {
     const { user } = useContext(AuthContext)
 
-    const [ routerList, setRouterList]  = useState([])
+    const [routerList, setRouterList] = useState([])
 
-    const resetRouter = () =>{
+    const resetRouter = () => {
         setRouterList(
             () => {
-                const newList = [<Link key="home" to="/"> Home </Link>]
+                const newList = [<AStyled key="home" to="/"> Home </AStyled>]
 
-                if(!user){
-                    newList.push(<Link key="login" to="/login"> Login </Link>)
-                    newList.push(<Link key="register" to="/register"> Register </Link>)
-                }else{
-                    newList.push(<Link key="admin" to="/admin"> Admin </Link>)
-                    newList.push(<Link key="delete" to="/delete"> delete restaurante </Link>)
-                    newList.push(<Link key="recreategister" to="/create"> Crear restaurante </Link>)
+                if (!user) {
+                    newList.push(<AStyled key="login" to="/login"> Login </AStyled>)
+                    newList.push(<AStyled key="register" to="/register"> Register </AStyled>)
+                } else {
+                    newList.push(<AStyled key="admin" to="/admin"> Admin </AStyled>)
+                    newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
+                    newList.push(<AStyled key="recreategister" to="/create"> Crear restaurante </AStyled>)
+                    newList.push(<AStyled key="meRestaurant" to="/restaurants"> Ver mis restaurantes </AStyled>)
                 }
                 return newList
             }
@@ -29,11 +58,11 @@ const Header = () => {
     useEffect(resetRouter, [user])
 
     return (
-        <header>
-            <nav>
+        <HeaderStyled>
+            <NavStyled>
                 {routerList}
-            </nav>
-        </header>
+            </NavStyled>
+        </HeaderStyled>
     )
 }
 export default Header;

@@ -1,4 +1,4 @@
-function card ({nombre, descripción, direccion, imagen}) {
+function Card ({nombre, descripción, direccion, imagen}) {
 return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
         <img className="w-full" src={imagen} alt={nombre} />
@@ -13,4 +13,4 @@ return (
 
 
 }
-export default card;
+export default Card;
