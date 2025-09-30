@@ -51,10 +51,16 @@ export default function Login() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const result = await userApi.login(loginState.username, loginState.password, loginState.role)
-    setUser(result.data.username)
-    navigate("/")
+    try {
+      e.preventDefault();
+      const result = await userApi.login(loginState.username, loginState.password, loginState.role)
+      setUser(result.data)
+      alert(result.msg)
+      navigate("/")
+    } catch (error) {
+      alert(error.data.error)
+    }
+
   };
 
   return (
@@ -74,7 +80,7 @@ export default function Login() {
         onChange={(e) => setLoginState(prev => ({ ...prev, password: e.target.value }))}
         required
       />
-      <Select value={loginState.role} onChange={(e) => setLoginState(prev =>({...prev,role:e.target.value}))}>
+      <Select value={loginState.role} onChange={(e) => setLoginState(prev => ({ ...prev, role: e.target.value }))}>
         <option value="consumer">Cliente</option>
         <option value="owner">Propietario</option>
       </Select>

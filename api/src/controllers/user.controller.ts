@@ -27,7 +27,7 @@ class UserController {
                     maxAge: 1000 * 60 * 15
                 }
             );
-            res.status(200).json({ msg: result.msg, data: { username: result.data.username } });
+            res.status(200).json({ msg: result.msg, data: { username: result.data.username, role: result.data.role } });
         } catch (error) { next(error); }
     }
 
@@ -42,8 +42,16 @@ class UserController {
                 }
             );
 
-            res.status(200).json({ msg: result.msg, data: { username: result.data.username } });
+            res.status(200).json({ msg: result.msg, data: { username: result.data.username, role: result.data.role } });
         } catch (error) { next(error); }
+    }
+
+    public logout = async (req: Request, res: Response) => {
+        res.clearCookie("auth_token", {
+            httpOnly: true,
+            sameSite: "strict"
+        });
+        res.status(200).json({ msg: "Sesión cerrada correctamente" });
     }
 }
 

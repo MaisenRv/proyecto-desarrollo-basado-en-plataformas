@@ -5,6 +5,7 @@ const ROUTES = {
         create: "/create",
         login: "/login",
         me:"/me",
+        logout:"/logout",
         list: "/"
     },
     restaurants:{

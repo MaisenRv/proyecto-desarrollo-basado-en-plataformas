@@ -5,6 +5,7 @@ export const ENDPOINTS = {
         login: `${API_BASE}/users/login`,
         create: `${API_BASE}/users/create`,
         me: `${API_BASE}/users/me`,
+        logout: `${API_BASE}/users/logout`,
     },
     restaurant:{
         list: `${API_BASE}/restaurants`

@@ -9,8 +9,10 @@ export async function fetchWrapper(url, options = {}) {
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText || `Error HTTP: ${response.status}`);
+    const errorText = await response.json();
+    const error = new Error(`Error HTTP: ${response.status}`)
+    error.data = errorText
+    throw error
   }
 
   return response.json();

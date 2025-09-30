@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { AuthContext } from "../providers/AuthProvider"
 import { useContext, useEffect, useState } from "react"
+import { userApi } from "../api/user.api"
 import styled from "styled-components"
 
 const HeaderStyled = styled.header`
@@ -31,9 +32,16 @@ const AStyled = styled(Link)`
 
 
 const Header = () => {
-    const { user } = useContext(AuthContext)
+    const { user, setUser } = useContext(AuthContext)
 
     const [routerList, setRouterList] = useState([])
+
+    const handleLogout = async () => {
+        const result = await userApi.logout()
+        alert(result.msg)
+        setUser(null)
+    }
+
 
     const resetRouter = () => {
         setRouterList(
@@ -48,6 +56,7 @@ const Header = () => {
                     newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
                     newList.push(<AStyled key="recreategister" to="/create"> Crear restaurante </AStyled>)
                     newList.push(<AStyled key="meRestaurant" to="/restaurants"> Ver mis restaurantes </AStyled>)
+                    newList.push(<AStyled key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AStyled>)
                 }
                 return newList
             }

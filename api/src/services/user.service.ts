@@ -4,6 +4,7 @@ import { MessageInterface } from "../interfaces/message.interface.js";
 import env from "../config/env.js";
 import jwt from "jsonwebtoken";
 import Hash from "../utils/Hash.js";
+import AppError from "../utils/AppError.js";
 
 class UserService {
   private userModel = new UserModel();
@@ -16,7 +17,7 @@ class UserService {
     newUser.password = await Hash.passwordToHash(newUser.password);
     const result = await this.userModel.createUser(newUser);
     const token = jwt.sign(
-      { user_id: result.user_id, role: result.role },
+      { user_id: result.user_id, username:result.username ,role: result.role },
       env.JWT_SECRET,
       { expiresIn: "15m" }
     )
@@ -24,7 +25,8 @@ class UserService {
       msg: "Usuario creado exitosamente",
       data: {
         auth_token: token,
-        username: result.username
+        username: result.username,
+        role: result.role
       }
     };
     
@@ -37,7 +39,7 @@ class UserService {
     if (await Hash.comparePassword(user.password, result.password)) {
 
       const token = jwt.sign(
-        { user_id: result.user_id, role: result.role },
+        { user_id: result.user_id, username:result.username, role: result.role },
         env.JWT_SECRET,
         { expiresIn: "15m" }
       )
@@ -47,11 +49,12 @@ class UserService {
         msg: "logeado Exitosamente",
         data: {
           auth_token: token,
-          username: result.username
+          username: result.username,
+          role: result.role
         }
       };
     } else {
-      message = { msg: "Contraseña incorrecta", data: null };
+      throw new AppError("Usuario o contraseña incorrecta", 400)
     }
     return message;
   }

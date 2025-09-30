@@ -9,8 +9,8 @@ export const userApi = {
         username: username,
         password: password,
         email: email,
-        role:role,
-        telefono:null
+        role: role,
+        telefono: null
       }),
     }),
 
@@ -25,4 +25,10 @@ export const userApi = {
       method: "GET",
       credentials: "include"
     }),
+
+  logout: () =>
+    fetchWrapper(ENDPOINTS.user.logout, {
+      method: "POST",
+      credentials: "include"
+    })
 };

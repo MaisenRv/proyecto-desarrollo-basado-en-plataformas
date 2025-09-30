@@ -40,61 +40,67 @@ const SwitchText = styled.p`
 `;
 
 export default function Register() {
-  const [registerState,setRegisterState] = useState({
-    username:"",
-    email:"",
-    password:"",
-    role:"consumer"
+  const [registerState, setRegisterState] = useState({
+    username: "",
+    email: "",
+    password: "",
+    role: "consumer"
   })
   const { setUser } = useContext(AuthContext);
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();   
-    const result = await userApi.register(
-      registerState.username, 
-      registerState.password, 
-      registerState.email, 
-      registerState.role
-    );
-    setUser(result.data.username)
-    navigate("/")
+    try {
+      e.preventDefault();
+      const result = await userApi.register(
+        registerState.username,
+        registerState.password,
+        registerState.email,
+        registerState.role
+      );
+      setUser(result.data)
+      alert(result.msg)
+      navigate("/")
+    } catch(error) {    
+      alert(error.data.error)
+    }
+
   };
 
   return (
-      <Form handleSubmit={handleSubmit}>
-        <Title>Registrarse</Title>
-        <Input
-          type="text"
-          placeholder="Nombre de usuario"
-          value={registerState.username}
-          onChange={(e) => setRegisterState(prev => ({...prev,username:e.target.value}))}
-          required
-        />
-        <Input
-          type="email"
-          placeholder="Correo electrónico"
-          value={registerState.email}
-          onChange={(e) => setRegisterState(prev => ({...prev,email:e.target.value}))}
-          required
-        />
-        <Input
-          type="password"
-          placeholder="Contraseña"
-          value={registerState.password}
-          onChange={(e) => setRegisterState(prev => ({...prev,password:e.target.value}))}
-          required
-        />
-        <Select value={registerState.role} onChange={(e) => setRegisterState(prev => ({...prev,role:e.target.value}))}>
-          <option value="consumer">Cliente</option>
-          <option value="owner">Propietario</option>
-        </Select>
-        <Boton type="submit">Registrarse</Boton>
+    <Form handleSubmit={handleSubmit}>
+      <Title>Registrarse</Title>
+      <Input
+        type="text"
+        placeholder="Nombre de usuario"
+        value={registerState.username}
+        onChange={(e) => setRegisterState(prev => ({ ...prev, username: e.target.value }))}
+        required
+      />
+      <Input
+        type="email"
+        placeholder="Correo electrónico"
+        value={registerState.email}
+        onChange={(e) => setRegisterState(prev => ({ ...prev, email: e.target.value }))}
+        required
+      />
+      <Input
+        type="password"
+        placeholder="Contraseña"
+        value={registerState.password}
+        onChange={(e) => setRegisterState(prev => ({ ...prev, password: e.target.value }))}
+        required
+      />
+      <Select value={registerState.role} onChange={(e) => setRegisterState(prev => ({ ...prev, role: e.target.value }))}>
+        <option value="consumer">Cliente</option>
+        <option value="owner">Propietario</option>
+      </Select>
+      <Boton type="submit">Registrarse</Boton>
 
-        <SwitchText>
-          ¿Ya tienes cuenta?{" "}
-          <Anchor to="/login">Inicia Sesión</Anchor>
-        </SwitchText>
-      </Form>
+      <SwitchText>
+        ¿Ya tienes cuenta?{" "}
+        <Anchor to="/login">Inicia Sesión</Anchor>
+      </SwitchText>
+    </Form>
   );
 }
