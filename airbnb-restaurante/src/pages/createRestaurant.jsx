@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Form from "../components/Form";
 import Input from "../components/Input";
 import Boton from "../components/Boton";
+import Select from "../components/Select"
 import { restaurantAPI } from "../api/restaurant.api";
 
 
@@ -25,10 +26,28 @@ export default function CreateRestaurant() {
   })
 
   const [img, setImg] = useState(null)
+  const [hoursOptions, setHoursOptions] = useState([])
 
-  const onChangeImg = (e) => {
-    setImg(e.target.files[0]);
+
+  const createHours = () => {
+    const hours = []
+    for (let i = 0; i < 24; i++) {
+      for (let j = 0; j < 2; j++) {
+        let hour = `${i}:${j == 0 ? "00" : "30" }`
+        hours.push(hour)
+      }
+    }
+    return hours
   }
+
+  useEffect(() => {
+    const hours = createHours()
+    setHoursOptions(
+      hours.map(hour => (
+        <option key={hour} value={hour}>{hour}</option>
+      ))
+    )
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +63,15 @@ export default function CreateRestaurant() {
 
       const result = await restaurantAPI.create(data)
       alert(result)
+
+      setForm({
+        name: "",
+        description: "",
+        address: "",
+        opening_hours: "",
+        closing_hours: ""
+      })
+      setImg(null)
     } catch (error) {
       alert(error.data.error)
     }
@@ -73,25 +101,19 @@ export default function CreateRestaurant() {
         onChange={(e) => setForm(prevState => ({ ...prevState, address: e.target.value }))}
         required
       />
-      <Input
-        type="text"
-        placeholder="Hora de apertura"
-        value={form.opening_hours}
-        onChange={(e) => setForm(prevState => ({ ...prevState, opening_hours: e.target.value }))}
-        required
-      />
-      <Input
-        type="text"
-        placeholder="Hora de cierre"
-        value={form.closing_hours}
-        onChange={(e) => setForm(prevState => ({ ...prevState, closing_hours: e.target.value }))}
-        required
-      />
+      <Select value={form.opening_hours} onChange={(e) => setForm(prevState => ({ ...prevState, opening_hours: e.target.value }))}>
+        <option value=""> Seleccione hora de apertura</option>
+        {hoursOptions}
+      </Select>
+      <Select value={form.closing_hours} onChange={(e) => setForm(prevState => ({ ...prevState, closing_hours: e.target.value }))}>
+        <option value=""> Seleccione hora de cierre</option>
+        {hoursOptions}
+      </Select>
       <Input
         type="file"
         placeholder="Hora de apertura"
         accept="image/*"
-        onChange={onChangeImg}
+        onChange={(e) => setImg(e.target.files[0])}
       />
       <Boton type="submit"> Crear Restaurante </Boton>
     </Form>

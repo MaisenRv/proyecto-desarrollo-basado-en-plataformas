@@ -19,7 +19,7 @@ const CardStyled = styled.div`
 `
 const CardImgStyled = styled.img`
     height: 200px;
-    object-fit: cover;
+    object-fit: contain;
 `
 const CardTitleStyled = styled.h2`
     font-weight: 600;
@@ -35,13 +35,35 @@ const CardAddressStyled = styled.p`
     font-size: 0.8rem;
     font-weight: 300;
 `
+const CardHoursStyled = styled.p`
+    font-size: 0.8rem;
+    font-weight: 300;
+`
+const CardContainerHourActive = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+`
+const CardSpan = styled.span`
+    font-size: 0.7rem;
+    font-weight: 500;
+    background-color: ${({$isActive}) => $isActive ? "var(--green-active)":"var(--bittersweet)" };
+    border-radius: 8px;
+    padding: 2px 5px;
+    color: var(--antiflash-white);
+`
 
-function Card({ nombre, descripción, direccion, imagen }) {
+function Card({ nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive }) {
     return (
         <CardStyled >
             <CardImgStyled src={imagen} alt={nombre} />
             <div>
                 <CardTitleStyled >{nombre}</CardTitleStyled>
+                <CardContainerHourActive>
+                    <CardHoursStyled>{`${horarioApertura} - ${horarioCierre}`}</CardHoursStyled>
+                    <CardSpan $isActive = {isActive} >{isActive ? "Activo":"Inactivo"}</CardSpan>
+                </CardContainerHourActive>
                 <CardDescriptionStyled >{descripción}</CardDescriptionStyled>
                 <CardAddressStyled>{direccion}</CardAddressStyled>
             </div>

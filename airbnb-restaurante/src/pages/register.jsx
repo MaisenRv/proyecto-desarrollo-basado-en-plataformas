@@ -8,6 +8,7 @@ import Boton from "../components/Boton";
 import Anchor from "../components/Anchor";
 import Form from "../components/Form";
 import Input from "../components/Input";
+import Select from "../components/Select";
 
 const Title = styled.h2`
   text-align: center;
@@ -15,21 +16,6 @@ const Title = styled.h2`
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: var(--raisin-black);
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 0.9rem;
-  margin-bottom: 1rem;
-  border: 1px solid var(--vivid-sky-blue);
-  border-radius: 10px;
-  font-size: 1rem;
-
-  &:focus {
-    outline: none;
-    border-color: var(--vivid-sky-blue);
-    box-shadow: 0 0 6px rgba(87, 196, 229, 0.5);
-  }
 `;
 
 const SwitchText = styled.p`
