@@ -3,24 +3,24 @@ import ROUTES from "../config/routes.js";
 import RestaurantController from "../controllers/restaurant.controller.js";
 import { validate } from "../middleware/Validations.middleware.js";
 import { RestaurantCreateSchema,RestaurantUpdateSchema,RestaurantDeleteSchema,RestaurantGetSchema } from "../middleware/schemas/ResturantSchema.js";
-import { authMiddleware } from "../middleware/Auth.middleware.js";
+import { upload } from "../types/img.type.js";
 
 const restaurantController = new RestaurantController();
 const restaurantRouter = Router();
 
 restaurantRouter.post(
     ROUTES.restaurants.list,
-    authMiddleware,
     validate(RestaurantGetSchema),
     restaurantController.getAllRestaurats
 );
 
 restaurantRouter.post(
     ROUTES.restaurants.create, 
-    authMiddleware, 
+    upload.single("file"),
     validate(RestaurantCreateSchema),
     restaurantController.createRestaurant
-)
+);
+
 restaurantRouter.put(
     ROUTES.restaurants.update, 
     validate(RestaurantUpdateSchema),
@@ -29,7 +29,6 @@ restaurantRouter.put(
 
 restaurantRouter.delete(
     ROUTES.restaurants.delete,
-    authMiddleware,
     validate(RestaurantDeleteSchema),
     restaurantController.deleteRestaurant
 );

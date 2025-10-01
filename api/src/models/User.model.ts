@@ -45,10 +45,10 @@ class UserModel {
             await client.query("COMMIT");
             user.role = newUser.role;
             return user!;
-        } catch (error:any) {
+        } catch (error: any) {
             await client.query("ROLLBACK");
             if (error.code === "23505") {
-                throw new AppError("El username ya existe",409);
+                throw new AppError("El username ya existe", 409);
             }
             throw error;
         } finally {
@@ -89,11 +89,46 @@ class UserModel {
             [userFound?.user_id]
         );
         if (checkRole.rowCount === 0) {
-            throw new AppError(`El usuario no existe con el rol ${role}` , 404);
+            throw new AppError(`El usuario no existe con el rol ${role}`, 404);
         }
         userFound!.role = role;
 
         return userFound!;
+    }
+
+    public static async checkUserRole(userId: number, role: string): Promise<any> {
+        const result: QueryResult<UserInterface> = await pool.query<UserInterface>(
+            'SELECT * FROM "user" WHERE user_id = $1',
+            [userId]
+        );
+
+        if (result.rowCount === 0) {
+            throw new AppError("El usuario no existe", 404);
+        }
+
+        let roleTable = "";
+        switch (role) {
+            case "owner":
+                roleTable = "owner";
+                break;
+            case "consumer":
+                roleTable = "consumer";
+                break;
+            case "admin":
+                roleTable = "admin";
+                break;
+            default:
+                throw new AppError("Rol no válido", 400);
+        }
+
+        const checkRole = await pool.query(
+            `SELECT * FROM ${roleTable} WHERE user_id = $1`,
+            [userId]
+        );
+        if (checkRole.rowCount === 0) {
+            throw new AppError(`El usuario no existe con el rol ${role}`, 404);
+        }
+        return checkRole.rows[0];
     }
 }
 

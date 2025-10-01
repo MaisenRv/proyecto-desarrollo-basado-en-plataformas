@@ -10,6 +10,17 @@ export const restaurantAPI = {
                 body: JSON.stringify({ user_id }),
                 credentials: "include"
             }
+        ),
+
+    create: (data) =>
+        fetchWrapper(
+            ENDPOINTS.restaurant.create,
+            {
+                method: "POST",
+                body: data,
+                credentials: "include"
+            },
+            "multipart/form-data"
         )
 
 }

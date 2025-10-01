@@ -27,17 +27,10 @@ class RestaurantModel {
         const client = await pool.connect();
         try {
             await client.query("BEGIN");
-            const result = await client.query(
-                'SELECT * FROM owner WHERE owner_id = $1',
-                [newRestaurant.owner_id]
-            );
-            if (result.rows.length === 0) {
-                throw new AppError("El owner no existe", 400);
-            }
-
+            
             const restauranCreated: QueryResult<RestaurantInterface> = await client.query<RestaurantInterface>(
-                'INSERT INTO restaurant(owner_id,name,description,address,opening_hours,closing_hours) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *',
-                [newRestaurant.owner_id, newRestaurant.name, newRestaurant.description, newRestaurant.address, newRestaurant.opening_hours, newRestaurant.closing_hours]
+                'INSERT INTO restaurant(owner_id,name,description,address,opening_hours,closing_hours,img) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
+                [newRestaurant.owner_id, newRestaurant.name, newRestaurant.description, newRestaurant.address, newRestaurant.opening_hours, newRestaurant.closing_hours,newRestaurant.img]
             );
 
             const restaurant = restauranCreated.rows[0];

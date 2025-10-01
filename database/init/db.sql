@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS "restaurant" (
   "address" varchar,
   "opening_hours" varchar NOT NULL,
   "closing_hours" varchar NOT NULL,
+  "img" varchar NULL,
   "is_active" bool NOT NULL DEFAULT true,
   "created_at" timestamp NOT NULL DEFAULT (now()),
   "update_at" timestamp NOT NULL DEFAULT (now())

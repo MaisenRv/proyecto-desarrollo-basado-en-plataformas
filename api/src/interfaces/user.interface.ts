@@ -21,5 +21,10 @@ export interface UserLoginInterface{
     role: string,
 }
 
+export interface UserRole{
+    user_id: string,
+    role:string
+}
+
 
 

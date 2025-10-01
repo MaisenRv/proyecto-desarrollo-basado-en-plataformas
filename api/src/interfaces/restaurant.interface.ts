@@ -4,6 +4,7 @@ export interface RestaurantInterface {
   name: string;
   description: string | null;
   address: string | null;
+  img: string;
   opening_hours: string;
   closing_hours: string;
   is_active: boolean;
@@ -16,6 +17,7 @@ export interface RestaurantCreateInterface {
   name: string;
   description?: string | null;
   address?: string | null;
+  img?: string;
   opening_hours: string;
   closing_hours: string;
 }

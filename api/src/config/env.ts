@@ -8,7 +8,12 @@ const env = {
         "PASSWORD":"root",
         "PORT":parseInt("5432")
     },
-    "JWT_SECRET":"8a8126d6bcf266bbfb078388c5f05db649dead25856d4ba61afc347035a3e945"
+    "JWT_SECRET":"8a8126d6bcf266bbfb078388c5f05db649dead25856d4ba61afc347035a3e945",
+    "MINIO":{
+        "USER":"admin",
+        "PASSWORD": "imagesStore",
+        "HOST": "172.20.0.5"
+    }
 };
 
 export default env;

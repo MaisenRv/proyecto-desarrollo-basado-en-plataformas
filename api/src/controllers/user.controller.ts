@@ -24,7 +24,7 @@ class UserController {
                 {
                     httpOnly: true,
                     sameSite: "strict",
-                    maxAge: 1000 * 60 * 15
+                    maxAge: 1000 * 60 * 60
                 }
             );
             res.status(200).json({ msg: result.msg, data: { username: result.data.username, role: result.data.role } });
@@ -38,7 +38,7 @@ class UserController {
                 {
                     httpOnly: true,
                     sameSite: "strict",
-                    maxAge: 1000 * 60 * 15
+                    maxAge: 1000 * 60 * 60
                 }
             );
 

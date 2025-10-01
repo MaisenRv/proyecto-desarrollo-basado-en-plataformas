@@ -1,10 +1,14 @@
-export async function fetchWrapper(url, options = {}) {
+export async function fetchWrapper(url, options = {}, contentType = "application/json") {
+  const isFormData = options.body instanceof FormData;
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
+    headers: isFormData
+      ? options.headers
+      : {
+        "Content-Type": contentType,
+        ...(options.headers || {}),
+      },
     credentials: "include",
   });
 

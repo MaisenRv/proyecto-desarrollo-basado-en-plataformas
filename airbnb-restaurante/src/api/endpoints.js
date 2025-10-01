@@ -8,6 +8,7 @@ export const ENDPOINTS = {
         logout: `${API_BASE}/users/logout`,
     },
     restaurant:{
-        list: `${API_BASE}/restaurants`
+        list: `${API_BASE}/restaurants`,
+        create: `${API_BASE}/restaurants/create`
     }
 }

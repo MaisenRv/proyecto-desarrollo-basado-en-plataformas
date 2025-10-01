@@ -1,5 +1,7 @@
 import RestaurantService from "../services/restaurant.service.js";
 import { NextFunction, Request, Response } from "express";
+import { AuthRequest } from "../types/auth.type.js";
+import FileService from "../services/file.service.js";
 
 class RestaurantController {
     private restaurantService = new RestaurantService();
@@ -18,14 +20,27 @@ class RestaurantController {
     }
 
 
-    public createRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+    public createRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) => {
         try {
-            const restaurant = await this.restaurantService.createRestaurant(req.body);
+            let image_object: string | null = null;
+            let image_url: string | null = null;
+
+            if (req.file) {
+                const upload = await FileService.uploadBuffer(req.file.buffer, req.file.originalname, req.file.mimetype);
+                image_object = upload.objectName;
+                image_url = upload.publicUrl;
+            }
+            req.body.img = image_url;
+            const restaurant = await this.restaurantService.createRestaurant(
+                req.body,
+                { user_id: req.user!.user_id, role: req.user!.role }
+            );
+
             res.status(200).json({ restaurant })
         } catch (error) { next(error); }
     }
 
-    public updateRestaurant = async (req: Request, res: Response, next:NextFunction) => {
+    public updateRestaurant = async (req: Request, res: Response, next: NextFunction) => {
         try {
 
         } catch (error) { next(error); }
