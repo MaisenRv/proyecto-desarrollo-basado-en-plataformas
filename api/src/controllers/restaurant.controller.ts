@@ -51,6 +51,14 @@ class RestaurantController {
             return this.restaurantService.deleteRestaurant(req.body);
         } catch (error) { next(error); }
     }
+
+    public getRestaurantsById = async (req: AuthRequest, res: Response, next: NextFunction) =>{
+        try {
+            const result = await this.restaurantService.getRestaurantsById({user_id: req.user!.user_id, role: req.user!.role });
+
+            res.status(200).json(result)
+        } catch (error) { next(error); }
+    }
 }
 
 export default RestaurantController;

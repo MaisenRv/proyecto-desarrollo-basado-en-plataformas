@@ -13,7 +13,8 @@ const ROUTES = {
         create: "/create",
         update: "/update",
         delete: "/delete",
-        list:"/"
+        list:"/",
+        getById: "/meRestaurants"
     }
 };
 

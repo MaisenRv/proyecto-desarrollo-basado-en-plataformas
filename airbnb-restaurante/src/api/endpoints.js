@@ -9,6 +9,7 @@ export const ENDPOINTS = {
     },
     restaurant:{
         list: `${API_BASE}/restaurants`,
-        create: `${API_BASE}/restaurants/create`
+        create: `${API_BASE}/restaurants/create`,
+        getById: `${API_BASE}/restaurants/meRestaurants`,
     }
 }

@@ -21,6 +21,15 @@ export const restaurantAPI = {
                 credentials: "include"
             },
             "multipart/form-data"
+        ),
+
+    getMeRestaurants: () =>
+        fetchWrapper(
+            ENDPOINTS.restaurant.getById,
+            {
+                method: "get",
+                credentials: "include"
+            }
         )
 
 }

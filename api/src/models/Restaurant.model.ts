@@ -1,4 +1,5 @@
 import pool from "../config/database.js";
+import { UserRole } from "../interfaces/user.interface.js";
 import { RestaurantInterface, RestaurantCreateInterface, RestaurantDeleteInterface, RestaurantGetInterface } from "../interfaces/restaurant.interface.js";
 import { QueryResult } from "pg";
 import AppError from "../utils/AppError.js";
@@ -27,10 +28,10 @@ class RestaurantModel {
         const client = await pool.connect();
         try {
             await client.query("BEGIN");
-            
+
             const restauranCreated: QueryResult<RestaurantInterface> = await client.query<RestaurantInterface>(
                 'INSERT INTO restaurant(owner_id,name,description,address,opening_hours,closing_hours,img) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *',
-                [newRestaurant.owner_id, newRestaurant.name, newRestaurant.description, newRestaurant.address, newRestaurant.opening_hours, newRestaurant.closing_hours,newRestaurant.img]
+                [newRestaurant.owner_id, newRestaurant.name, newRestaurant.description, newRestaurant.address, newRestaurant.opening_hours, newRestaurant.closing_hours, newRestaurant.img]
             );
 
             const restaurant = restauranCreated.rows[0];
@@ -58,6 +59,20 @@ class RestaurantModel {
         return { msg: "Borrado", data: result };
     }
 
+    public async getRestaurantsById(user: UserRole): Promise<RestaurantInterface[]> {
+        try {
+            const result:QueryResult<RestaurantInterface> = await pool.query(
+                "select * from restaurant where owner_id = (select owner_id from owner where user_id = $1)",
+                [user.user_id]
+            );
+            if(result.rowCount === 0 ){
+                throw new AppError("NO existe restaurantes de este usuario",404);
+            }
+            return result.rows;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default RestaurantModel;

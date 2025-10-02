@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import TreePointButton from "./TreePointButton";
+import { useState } from "react";
 
 const CardStyled = styled.div`
     display: flex;
@@ -48,13 +50,19 @@ const CardContainerHourActive = styled.div`
 const CardSpan = styled.span`
     font-size: 0.7rem;
     font-weight: 500;
-    background-color: ${({$isActive}) => $isActive ? "var(--green-active)":"var(--bittersweet)" };
+    background-color: ${({ $isActive }) => $isActive ? "var(--green-active)" : "var(--bittersweet)"};
     border-radius: 8px;
     padding: 2px 5px;
     color: var(--antiflash-white);
 `
 
+const Menu = styled.div`
+    
+`
+
 function Card({ nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive }) {
+    const [open,setOpen] = useState(false)
+
     return (
         <CardStyled >
             <CardImgStyled src={imagen} alt={nombre} />
@@ -62,10 +70,18 @@ function Card({ nombre, descripción, direccion, imagen, horarioApertura, horari
                 <CardTitleStyled >{nombre}</CardTitleStyled>
                 <CardContainerHourActive>
                     <CardHoursStyled>{`${horarioApertura} - ${horarioCierre}`}</CardHoursStyled>
-                    <CardSpan $isActive = {isActive} >{isActive ? "Activo":"Inactivo"}</CardSpan>
+                    <CardSpan $isActive={isActive} >{isActive ? "Activo" : "Inactivo"}</CardSpan>
                 </CardContainerHourActive>
                 <CardDescriptionStyled >{descripción}</CardDescriptionStyled>
-                <CardAddressStyled>{direccion}</CardAddressStyled>
+                <CardContainerHourActive>
+                    <CardAddressStyled>{direccion}</CardAddressStyled>
+                    <TreePointButton>⋮</TreePointButton>
+                    {
+                        <Menu>
+                            
+                        </Menu>
+                    }
+                </CardContainerHourActive>
             </div>
         </CardStyled>
 

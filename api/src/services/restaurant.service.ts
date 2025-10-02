@@ -25,6 +25,10 @@ class RestaurantService {
         return await this.restaurantModel.deleteRestaurant(restaurantId);
     }
 
+    public async getRestaurantsById(userRole:UserRole){
+        return await this.restaurantModel.getRestaurantsById(userRole);
+    }
+
 }
 
 export default RestaurantService;
