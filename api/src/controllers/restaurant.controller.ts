@@ -6,16 +6,12 @@ import FileService from "../services/file.service.js";
 class RestaurantController {
     private restaurantService = new RestaurantService();
 
-    public getAllRestaurats = async (req: Request, res: Response) => {
+    public getAllRestaurats = async (req: Request, res: Response, next:NextFunction) => {
         try {
-            const restaurants = await this.restaurantService.getAllRestaurants(req.body);
-            if (restaurants.length == 0) {
-                res.status(200).json({ restaurants: "No existen restaurantes en la base de datos" })
-            }
+            const restaurants = await this.restaurantService.getAllRestaurants();
             res.status(200).json({ restaurants })
-
         } catch (error) {
-            res.status(500).json({ error: "Error interno del servidor" });
+            next(error)
         }
     }
 

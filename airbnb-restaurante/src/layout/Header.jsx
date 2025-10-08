@@ -3,6 +3,7 @@ import { AuthContext } from "../providers/AuthProvider"
 import { useContext, useEffect, useState } from "react"
 import { userApi } from "../api/user.api"
 import styled from "styled-components"
+import UserMenu from "../components/UserMenu"
 
 const HeaderStyled = styled.header`
     background: var(--raisin-black);
@@ -16,18 +17,43 @@ const HeaderStyled = styled.header`
 const NavStyled = styled.nav`
     display: flex;
     gap: 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+`
+const ContainerRight = styled.nav`
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: row;
 `
 
 const AStyled = styled(Link)`
-    color: var(--antiflash-white);
-    font-size: 1rem;
+
+    ${({ $menu }) => $menu ? `
+        padding: 10px 14px;
+        text-align: left;
+        color: var(--raisin-black);
+        transition: background 0.2s ease;
+        font-size: 0.9rem;
+        &:hover {
+            background-color: #f3f3f3;
+        }
+
+        &:active {
+            background-color: #e0e0e0;
+        }
+            
+    `:
+    `
+        color: var(--antiflash-white);
+        font-weight: 500;
+        transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+        font-size: 1rem;
+        &:hover{
+            color: var(--vivid-sky-blue); 
+            transform: scale(1.05);
+        }
+    `}
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
-    &:hover{
-        color: var(--vivid-sky-blue); 
-        transform: scale(1.05);
-    }
 `
 
 
@@ -49,14 +75,22 @@ const Header = () => {
                 const newList = [<AStyled key="home" to="/"> Home </AStyled>]
 
                 if (!user) {
-                    newList.push(<AStyled key="login" to="/login"> Login </AStyled>)
-                    newList.push(<AStyled key="register" to="/register"> Register </AStyled>)
+                    newList.push(
+                        <ContainerRight key="container">
+                            <AStyled key="register" to="/register"> Register </AStyled>
+                            <AStyled key="login" to="/login"> Login </AStyled>
+                        </ContainerRight>
+                    )
                 } else {
-                    newList.push(<AStyled key="admin" to="/admin"> Admin </AStyled>)
-                    newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
-                    newList.push(<AStyled key="recreategister" to="/create"> Crear restaurante </AStyled>)
-                    newList.push(<AStyled key="meRestaurant" to="/restaurants"> Ver mis restaurantes </AStyled>)
-                    newList.push(<AStyled key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AStyled>)
+                    // newList.push(<AStyled key="admin" to="/admin"> Admin </AStyled>)
+                    // newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
+                    // newList.push(<AStyled key="recreategister" to="/create"> Crear restaurante </AStyled>)
+                    newList.push(
+                        <UserMenu key="userMenu">
+                            <AStyled $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AStyled>
+                            <AStyled $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AStyled>
+                        </UserMenu>
+                    )
                 }
                 return newList
             }

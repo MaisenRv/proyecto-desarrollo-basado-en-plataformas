@@ -6,22 +6,13 @@ import AppError from "../utils/AppError.js";
 import { MessageInterface } from "../interfaces/message.interface.js";
 
 class RestaurantModel {
-    public async getAllRestaurants(userId: RestaurantGetInterface): Promise<RestaurantInterface[]> {
+    public async getAllRestaurants(): Promise<RestaurantInterface[]> {
         try {
-            const owner_id: QueryResult = await pool.query(
-                "SELECT owner_id FROM owner WHERE user_id = $1",
-                [userId.user_id]
-            );
-            const result: QueryResult = await pool.query(
-                'SELECT * FROM restaurant WHERE owner_id = $1',
-                [owner_id.rows[0].owner_id]
-            );
+            const result: QueryResult = await pool.query('SELECT * FROM restaurant WHERE is_active = true');
             return result.rows;
         } catch (error) {
             throw error;
         }
-
-
     }
 
     public async createRestaurant(newRestaurant: RestaurantCreateInterface): Promise<RestaurantInterface> {

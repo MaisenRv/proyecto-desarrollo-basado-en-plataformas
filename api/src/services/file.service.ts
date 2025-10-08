@@ -33,12 +33,12 @@ class FileService {
             await minioClient.makeBucket(FileService.BUCKET, "us-east-1");
             console.log(`Bucket "${FileService.BUCKET}" creado`);
             const policy = {
-                Version: "2025-10-30",
+                Version: "2012-10-17",
                 Statement: [
                     {
                         Action: ["s3:GetObject"],
                         Effect: "Allow",
-                        Principal: { AWS: ["*"] },
+                        Principal: "*",
                         Resource: [`arn:aws:s3:::${FileService.BUCKET}/*`],
                     },
                 ],
