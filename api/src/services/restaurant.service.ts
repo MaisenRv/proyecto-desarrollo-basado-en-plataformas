@@ -7,8 +7,8 @@ import { UserRole } from "../interfaces/user.interface.js";
 class RestaurantService {
     private restaurantModel = new RestaurantModel();
 
-    public async getAllRestaurants(userId:RestaurantGetInterface): Promise<RestaurantInterface[]> {
-        return await this.restaurantModel.getAllRestaurants(userId);
+    public async getAllRestaurants(): Promise<RestaurantInterface[]> {
+        return await this.restaurantModel.getAllRestaurants();
     }
     public async createRestaurant(newRestaurant:RestaurantCreateInterface, userRole:UserRole):Promise<MessageInterface> {
         const result = await UserModel.checkUserRole(parseInt(userRole.user_id), userRole.role);
