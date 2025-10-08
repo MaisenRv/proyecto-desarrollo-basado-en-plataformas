@@ -43,7 +43,7 @@ const AStyled = styled(Link)`
         }
             
     `:
-    `
+        `
         color: var(--antiflash-white);
         font-weight: 500;
         transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
@@ -59,50 +59,32 @@ const AStyled = styled(Link)`
 
 const Header = () => {
     const { user, setUser } = useContext(AuthContext)
-
-    const [routerList, setRouterList] = useState([])
-
     const handleLogout = async () => {
         const result = await userApi.logout()
         alert(result.msg)
         setUser(null)
     }
 
-
-    const resetRouter = () => {
-        setRouterList(
-            () => {
-                const newList = [<AStyled key="home" to="/"> Home </AStyled>]
-
-                if (!user) {
-                    newList.push(
-                        <ContainerRight key="container">
-                            <AStyled key="register" to="/register"> Register </AStyled>
-                            <AStyled key="login" to="/login"> Login </AStyled>
-                        </ContainerRight>
-                    )
-                } else {
-                    // newList.push(<AStyled key="admin" to="/admin"> Admin </AStyled>)
-                    // newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
-                    // newList.push(<AStyled key="recreategister" to="/create"> Crear restaurante </AStyled>)
-                    newList.push(
-                        <UserMenu key="userMenu">
-                            <AStyled $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AStyled>
-                            <AStyled $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AStyled>
-                        </UserMenu>
-                    )
-                }
-                return newList
-            }
-        )
-    }
-
-    useEffect(resetRouter, [user])
+  
+    // newList.push(<AStyled key="admin" to="/admin"> Admin </AStyled>)
+    // newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
 
     return (
         <HeaderStyled>
             <NavStyled>
-                {routerList}
+                <AStyled key="home" to="/"> Home </AStyled>
+                {!user ?
+                    <ContainerRight key="container">
+                        <AStyled key="register" to="/register"> Register </AStyled>
+                        <AStyled key="login" to="/login"> Login </AStyled>
+                    </ContainerRight>
+                    :
+                    <UserMenu key="userMenu">
+                        <AStyled $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AStyled>
+                        <AStyled $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AStyled>
+                    </UserMenu>
+
+                }
             </NavStyled>
         </HeaderStyled>
     )
