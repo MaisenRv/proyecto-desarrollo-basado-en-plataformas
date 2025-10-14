@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import TreePointButton from "./TreePointButton";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import AMenu from "./AMenu";
+import { useNavigate } from "react-router-dom";
 
 const CardStyled = styled.div`
     display: flex;
@@ -12,7 +14,6 @@ const CardStyled = styled.div`
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
     transition: all .3s ease-in-out;
     box-sizing: border-box;
-    cursor: pointer;
     &:hover{
         transition: all .3s ease-in-out;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
@@ -57,11 +58,34 @@ const CardSpan = styled.span`
 `
 
 const Menu = styled.div`
-    
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    padding: 8px 0;
+    min-width: 100px;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
 `
 
-function Card({ nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive }) {
-    const [open,setOpen] = useState(false)
+function Card({restaurant_id,nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive, onDelete }) {
+    const [open, setOpen] = useState(false)
+    const menuRef = useRef(null);
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (menuRef.current && !menuRef.current.contains(e.target)) {
+                setOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
         <CardStyled >
@@ -75,12 +99,19 @@ function Card({ nombre, descripción, direccion, imagen, horarioApertura, horari
                 <CardDescriptionStyled >{descripción}</CardDescriptionStyled>
                 <CardContainerHourActive>
                     <CardAddressStyled>{direccion}</CardAddressStyled>
-                    <TreePointButton>⋮</TreePointButton>
-                    {
-                        <Menu>
-                            
-                        </Menu>
-                    }
+                    <div style={{ position: "relative" }} ref={menuRef}>
+                        <TreePointButton onClick={() => setOpen(!open)} >⋮</TreePointButton>
+                        {
+                            open &&
+                            (
+                                <Menu>
+                                    <AMenu $menu to={`/editRestaurants/${restaurant_id}`}>Editar</AMenu>
+                                    <AMenu $menu onClick={onDelete}>Eliminar</AMenu>
+                                </Menu>
+                            )
+                        }
+                    </div>
+
                 </CardContainerHourActive>
             </div>
         </CardStyled>

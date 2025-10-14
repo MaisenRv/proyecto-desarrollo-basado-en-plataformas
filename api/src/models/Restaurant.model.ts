@@ -4,6 +4,7 @@ import { RestaurantInterface, RestaurantCreateInterface, RestaurantDeleteInterfa
 import { QueryResult } from "pg";
 import AppError from "../utils/AppError.js";
 import { MessageInterface } from "../interfaces/message.interface.js";
+import { console } from "inspector";
 
 class RestaurantModel {
     public async getAllRestaurants(): Promise<RestaurantInterface[]> {
@@ -42,6 +43,7 @@ class RestaurantModel {
 
 
     public async deleteRestaurant(restaurantId: RestaurantDeleteInterface): Promise<MessageInterface> {
+        console.log(restaurantId);
         const result = await pool.query(
             'DELETE FROM restaurant WHERE restaurant_id = $1',
             [restaurantId.restaurant_id]
@@ -52,18 +54,35 @@ class RestaurantModel {
 
     public async getRestaurantsById(user: UserRole): Promise<RestaurantInterface[]> {
         try {
-            const result:QueryResult<RestaurantInterface> = await pool.query(
+            const result: QueryResult<RestaurantInterface> = await pool.query(
                 "select * from restaurant where owner_id = (select owner_id from owner where user_id = $1)",
                 [user.user_id]
             );
-            if(result.rowCount === 0 ){
-                throw new AppError("NO existe restaurantes de este usuario",404);
+            if (result.rowCount === 0) {
+                throw new AppError("NO existe restaurantes de este usuario", 404);
             }
             return result.rows;
         } catch (error) {
             throw error;
         }
     }
+
+    public async getRestaurant(restaurant_id: number):Promise<RestaurantInterface> {
+        try {
+            const result: QueryResult<RestaurantInterface> = await pool.query(
+                "select * from restaurant where restaurant_id = $1",
+                [restaurant_id]
+            );
+            console.log("restaurante MODEL: ",restaurant_id);
+            if (result.rowCount === 0) {
+                throw new AppError("El restaurante No existe", 404);
+            }
+            return result.rows[0]!;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 export default RestaurantModel;

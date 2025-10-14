@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
 import { AuthContext } from "../providers/AuthProvider"
 import { useContext, useEffect, useState } from "react"
 import { userApi } from "../api/user.api"
 import styled from "styled-components"
 import UserMenu from "../components/UserMenu"
+import AMenu from "../components/AMenu"
 
 const HeaderStyled = styled.header`
     background: var(--raisin-black);
@@ -26,37 +26,6 @@ const ContainerRight = styled.nav`
     flex-direction: row;
 `
 
-const AStyled = styled(Link)`
-
-    ${({ $menu }) => $menu ? `
-        padding: 10px 14px;
-        text-align: left;
-        color: var(--raisin-black);
-        transition: background 0.2s ease;
-        font-size: 0.9rem;
-        &:hover {
-            background-color: #f3f3f3;
-        }
-
-        &:active {
-            background-color: #e0e0e0;
-        }
-            
-    `:
-        `
-        color: var(--antiflash-white);
-        font-weight: 500;
-        transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
-        font-size: 1rem;
-        &:hover{
-            color: var(--vivid-sky-blue); 
-            transform: scale(1.05);
-        }
-    `}
-    text-decoration: none;
-`
-
-
 const Header = () => {
     const { user, setUser } = useContext(AuthContext)
     const handleLogout = async () => {
@@ -65,23 +34,19 @@ const Header = () => {
         setUser(null)
     }
 
-  
-    // newList.push(<AStyled key="admin" to="/admin"> Admin </AStyled>)
-    // newList.push(<AStyled key="delete" to="/delete"> delete restaurante </AStyled>)
-
     return (
         <HeaderStyled>
             <NavStyled>
-                <AStyled key="home" to="/"> Home </AStyled>
+                <AMenu key="home" to="/"> Home </AMenu>
                 {!user ?
                     <ContainerRight key="container">
-                        <AStyled key="register" to="/register"> Register </AStyled>
-                        <AStyled key="login" to="/login"> Login </AStyled>
+                        <AMenu key="register" to="/register"> Register </AMenu>
+                        <AMenu key="login" to="/login"> Login </AMenu>
                     </ContainerRight>
                     :
                     <UserMenu key="userMenu">
-                        <AStyled $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AStyled>
-                        <AStyled $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AStyled>
+                        <AMenu $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AMenu>
+                        <AMenu $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AMenu>
                     </UserMenu>
 
                 }

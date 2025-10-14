@@ -26,6 +26,15 @@ export const restaurantAPI = {
                 method: "get",
                 credentials: "include"
             }
+        ),
+    deleteRestaurant: (restaurant_id) =>
+        fetchWrapper(
+            ENDPOINTS.restaurant.delete,
+            {
+                method: "delete",
+                body:JSON.stringify({restaurant_id:restaurant_id}),
+                credentials: "include"
+            }
         )
 
 }

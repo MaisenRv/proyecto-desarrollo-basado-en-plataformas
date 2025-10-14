@@ -22,7 +22,7 @@ class FileService {
     }
 
     public static async deleteObject(objectName: string) {
-        return minioClient.removeObject(FileService.BUCKET, objectName);
+        return await minioClient.removeObject(FileService.BUCKET, objectName);
     }
 
 
@@ -36,7 +36,7 @@ class FileService {
                 Version: "2012-10-17",
                 Statement: [
                     {
-                        Action: ["s3:GetObject"],
+                        Action: ["s3:GetObject","s3:DeleteObject"],
                         Effect: "Allow",
                         Principal: "*",
                         Resource: [`arn:aws:s3:::${FileService.BUCKET}/*`],
