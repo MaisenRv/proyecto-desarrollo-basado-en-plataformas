@@ -15,7 +15,7 @@ const Title = styled.h2`
   color: var(--raisin-black);
 `;
 
-export default function CreateRestaurant() {
+export default function EditRestaurant() {
   const navigate = useNavigate()
 
   const [form, setForm] = useState({

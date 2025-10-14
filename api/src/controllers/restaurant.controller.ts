@@ -42,9 +42,15 @@ class RestaurantController {
         } catch (error) { next(error); }
     }
 
-    public deleteRestaurant = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            return this.restaurantService.deleteRestaurant(req.body);
+    public deleteRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) => {
+        try {            
+            const restaurantToDelete = await this.restaurantService.getRestaurant(req.body.restaurant_id);
+            if (restaurantToDelete.img){
+                const objectName = restaurantToDelete.img.split("/uploads/")[1];
+                await FileService.deleteObject(objectName!);
+            }
+            const result = await this.restaurantService.deleteRestaurant(req.body);
+            res.status(200).json(result)
         } catch (error) { next(error); }
     }
 
@@ -55,6 +61,13 @@ class RestaurantController {
             res.status(200).json(result)
         } catch (error) { next(error); }
     }
+
+    // public getRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) =>{
+    //     try {
+    //         const result = await this.restaurantService.getRestaurant();
+    //         res.status(200).json(result)
+    //     } catch (error) { next(error); }
+    // }
 }
 
 export default RestaurantController;

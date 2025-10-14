@@ -10,35 +10,28 @@ const MeRestaurants = () => {
     const [restaurantes, setRestaurantes] = useState([])
     const navigate = useNavigate()
 
-    const handleCrear = () =>{
+    const handleCrear = () => {
         navigate("/createRestaurant")
-    } 
+    }
 
-    const botonCrear = 
+    const onDelete = async (id) => {
+        try {
+            const result = await restaurantAPI.deleteRestaurant(id)
+            alert(result.msg)
+            setRestaurantes(prev => prev.filter(rest => rest.restaurant_id !== id))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const botonCrear =
         <ActivateBoton key="crear" onClick={handleCrear}>
-            <span style={{fontSize:"6rem"}}>+</span> <br/>Crear
+            <span style={{ fontSize: "6rem" }}>+</span> <br />Crear
         </ActivateBoton>
 
     const getRestaurants = async () => {
         const result = await restaurantAPI.getMeRestaurants()
-        setRestaurantes(
-            [
-                botonCrear,
-                ...result.map((restaurant) => (
-                    <Card
-                        key={restaurant.restaurant_id}
-                        imagen={restaurant.img == null ? imgPlaceholder : restaurant.img}
-                        nombre={restaurant.name}
-                        descripción={restaurant.description}
-                        direccion={restaurant.address}
-                        horarioApertura={restaurant.opening_hours}
-                        horarioCierre={restaurant.closing_hours}
-                        isActive={restaurant.is_active}
-                    />
-                ))
-            ]
-        )
-
+        setRestaurantes(result)
     }
 
     useEffect(() => {
@@ -46,18 +39,32 @@ const MeRestaurants = () => {
             try {
                 await getRestaurants();
             } catch (error) {
-                setRestaurantes([botonCrear])
+                setRestaurantes([])
             }
         }
         fectchData()
     }, [])
 
     return (
-        <>
             <GridContainer>
-                {restaurantes}
+                {botonCrear}
+                {
+                    restaurantes.map((restaurant) => (
+                        <Card
+                            key={restaurant.restaurant_id}
+                            restaurant_id={restaurant.restaurant_id}
+                            imagen={restaurant.img && restaurant.img.trim() !== "" ? restaurant.img : imgPlaceholder}
+                            nombre={restaurant.name}
+                            descripción={restaurant.description}
+                            direccion={restaurant.address}
+                            horarioApertura={restaurant.opening_hours}
+                            horarioCierre={restaurant.closing_hours}
+                            isActive={restaurant.is_active}
+                            onDelete={() => onDelete(restaurant.restaurant_id)}
+                        />
+                    ))
+                }
             </GridContainer>
-        </>
     )
 }
 

@@ -29,6 +29,10 @@ class RestaurantService {
         return await this.restaurantModel.getRestaurantsById(userRole);
     }
 
+    public async getRestaurant(restaurant_id: number):Promise<RestaurantInterface>{
+        return await this.restaurantModel.getRestaurant(restaurant_id);
+    }
+
 }
 
 export default RestaurantService;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { restaurantAPI } from "../api/restaurant.api"
 import imgPlaceholder from "../assets/imagen.png"
 import PublicCard from "../components/PublicCard"
+import GridContainer from "../components/GridContainer"
 
 const Home = () => {
     const [restaurants, setRestaurants] = useState([])
@@ -33,9 +34,9 @@ const Home = () => {
     }, [])
 
     return (
-        <>
+        <GridContainer>
             {restaurants}
-        </>
+        </GridContainer>
     )
 }
 

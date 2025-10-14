@@ -11,5 +11,6 @@ export const ENDPOINTS = {
         list: `${API_BASE}/restaurants`,
         create: `${API_BASE}/restaurants/create`,
         getById: `${API_BASE}/restaurants/meRestaurants`,
+        delete: `${API_BASE}/restaurants/delete`
     }
 }
