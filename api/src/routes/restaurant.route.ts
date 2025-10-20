@@ -42,10 +42,17 @@ restaurantRouter.delete(
 );
 
 restaurantRouter.get(
-    ROUTES.restaurants.getById,
+    ROUTES.restaurants.getMeRestaurants,
     authMiddleware,
     authorize([Roles.OWNER, Roles.ADMIN]),
-    restaurantController.getRestaurantsById
+    restaurantController.getMeRestaurants
+)
+
+restaurantRouter.post(
+    ROUTES.restaurants.getRestaurantById,
+    authMiddleware,
+    authorize([Roles.OWNER,Roles.ADMIN]),
+    restaurantController.getRestaurantById
 )
 
 export default restaurantRouter;

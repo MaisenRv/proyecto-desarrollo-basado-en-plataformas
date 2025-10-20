@@ -25,12 +25,12 @@ class RestaurantService {
         return await this.restaurantModel.deleteRestaurant(restaurantId);
     }
 
-    public async getRestaurantsById(userRole:UserRole){
-        return await this.restaurantModel.getRestaurantsById(userRole);
+    public async getMeRestaurants(userRole:UserRole){
+        return await this.restaurantModel.getMeRestaurants(userRole);
     }
 
-    public async getRestaurant(restaurant_id: number):Promise<RestaurantInterface>{
-        return await this.restaurantModel.getRestaurant(restaurant_id);
+    public async getRestaurantById(restaurant_id: number):Promise<RestaurantInterface>{
+        return await this.restaurantModel.getRestaurantById(restaurant_id);
     }
 
 }

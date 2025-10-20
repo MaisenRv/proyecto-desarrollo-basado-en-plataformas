@@ -6,6 +6,8 @@ const FormStyled = styled.form`
   border-radius: 16px;
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
   width: 400px;
+  display: flex;
+  flex-direction: column;
 `;
 
 

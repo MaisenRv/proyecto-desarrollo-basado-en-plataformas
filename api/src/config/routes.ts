@@ -14,7 +14,8 @@ const ROUTES = {
         update: "/update",
         delete: "/delete",
         list:"/",
-        getById: "/meRestaurants"
+        getMeRestaurants: "/meRestaurants",
+        getRestaurantById: "/getRestaurantById"
     }
 };
 

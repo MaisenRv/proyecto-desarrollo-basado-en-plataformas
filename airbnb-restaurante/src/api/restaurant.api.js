@@ -21,7 +21,7 @@ export const restaurantAPI = {
 
     getMeRestaurants: () =>
         fetchWrapper(
-            ENDPOINTS.restaurant.getById,
+            ENDPOINTS.restaurant.getMeRestaurants,
             {
                 method: "get",
                 credentials: "include"
@@ -33,6 +33,15 @@ export const restaurantAPI = {
             {
                 method: "delete",
                 body:JSON.stringify({restaurant_id:restaurant_id}),
+                credentials: "include"
+            }
+        ),
+    getRestaurantById: (restaurant_id) => 
+        fetchWrapper(
+            ENDPOINTS.restaurant.getOne,
+            {
+                method: "post",
+                body:JSON.stringify({restaurant_id:parseInt(restaurant_id)}), 
                 credentials: "include"
             }
         )

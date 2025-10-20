@@ -10,7 +10,8 @@ export const ENDPOINTS = {
     restaurant:{
         list: `${API_BASE}/restaurants`,
         create: `${API_BASE}/restaurants/create`,
-        getById: `${API_BASE}/restaurants/meRestaurants`,
-        delete: `${API_BASE}/restaurants/delete`
+        getMeRestaurants: `${API_BASE}/restaurants/meRestaurants`,
+        delete: `${API_BASE}/restaurants/delete`,
+        getOne: `${API_BASE}/restaurants/getRestaurantById`
     }
 }

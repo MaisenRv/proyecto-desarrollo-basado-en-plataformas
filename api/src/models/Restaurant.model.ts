@@ -52,7 +52,7 @@ class RestaurantModel {
         return { msg: "Borrado", data: result };
     }
 
-    public async getRestaurantsById(user: UserRole): Promise<RestaurantInterface[]> {
+    public async getMeRestaurants(user: UserRole): Promise<RestaurantInterface[]> {
         try {
             const result: QueryResult<RestaurantInterface> = await pool.query(
                 "select * from restaurant where owner_id = (select owner_id from owner where user_id = $1)",
@@ -67,13 +67,12 @@ class RestaurantModel {
         }
     }
 
-    public async getRestaurant(restaurant_id: number):Promise<RestaurantInterface> {
-        try {
+    public async getRestaurantById(restaurant_id: number):Promise<RestaurantInterface> {
+        try {    
             const result: QueryResult<RestaurantInterface> = await pool.query(
                 "select * from restaurant where restaurant_id = $1",
                 [restaurant_id]
             );
-            console.log("restaurante MODEL: ",restaurant_id);
             if (result.rowCount === 0) {
                 throw new AppError("El restaurante No existe", 404);
             }

@@ -44,7 +44,7 @@ class RestaurantController {
 
     public deleteRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) => {
         try {            
-            const restaurantToDelete = await this.restaurantService.getRestaurant(req.body.restaurant_id);
+            const restaurantToDelete = await this.restaurantService.getRestaurantById(req.body.restaurant_id);
             if (restaurantToDelete.img){
                 const objectName = restaurantToDelete.img.split("/uploads/")[1];
                 await FileService.deleteObject(objectName!);
@@ -54,20 +54,20 @@ class RestaurantController {
         } catch (error) { next(error); }
     }
 
-    public getRestaurantsById = async (req: AuthRequest, res: Response, next: NextFunction) =>{
+    public getMeRestaurants = async (req: AuthRequest, res: Response, next: NextFunction) =>{
         try {
-            const result = await this.restaurantService.getRestaurantsById({user_id: req.user!.user_id, role: req.user!.role });
+            const result = await this.restaurantService.getMeRestaurants({user_id: req.user!.user_id, role: req.user!.role });
 
             res.status(200).json(result)
         } catch (error) { next(error); }
     }
 
-    // public getRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) =>{
-    //     try {
-    //         const result = await this.restaurantService.getRestaurant();
-    //         res.status(200).json(result)
-    //     } catch (error) { next(error); }
-    // }
+    public getRestaurantById = async (req: AuthRequest, res: Response, next: NextFunction) =>{
+        try {
+            const result = await this.restaurantService.getRestaurantById(req.body.restaurant_id);
+            res.status(200).json(result)
+        } catch (error) { next(error); }
+    }
 }
 
 export default RestaurantController;
