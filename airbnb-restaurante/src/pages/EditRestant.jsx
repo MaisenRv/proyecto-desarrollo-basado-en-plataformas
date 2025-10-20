@@ -25,17 +25,27 @@ export default function EditRestaurant() {
   const navigate = useNavigate()
   const { id } = useParams()
   const [form, setForm] = useState({
-    restaurant_id: 0,
-    owner_id:0,
-    name: "",
-    description: "",
-    address: "",
-    opening_hours: "",
-    closing_hours: "",
-    is_active: true,
-    img:"",
-    created_at:"",
-    update_at:""
+    old_restaurant: {
+      restaurant_id: id,
+      owner_id: 0,
+      name: "",
+      description: "",
+      address: "",
+      opening_hours: "",
+      closing_hours: "",
+      is_active: true,
+      img: "",
+      created_at: "",
+      update_at: ""
+    },
+    update_restaurant: {
+      name: "",
+      description: "",
+      address: "",
+      opening_hours: "",
+      closing_hours: "",
+      is_active: true,
+    }
   })
 
   const [img, setImg] = useState(null)
@@ -68,40 +78,59 @@ export default function EditRestaurant() {
 
     const fectchData = async () => {
       try {
-        const result = await getRestaurant(id)
-        setForm(result)
-      } catch (error) {
-        console.log(error);
-        
-        // setRestaurantes([])
-      }
+        const result = await getRestaurant(id)       
+        setForm({
+          old_restaurant: {...result, img: result.img == null ? "":result.img},
+          update_restaurant: {
+            name: result.name,
+            description: result.description,
+            address: result.address,
+            opening_hours: result.opening_hours,
+            closing_hours: result.closing_hours,
+            is_active: `${result.is_active}`,
+          }
+        })
+
+
+      } catch (error) {}
     }
     fectchData()
-
   }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = new FormData();
-      Object.keys(form).forEach((key) => {
-        data.append(key, form[key]);
-      });
+      data.append("old_restaurant", JSON.stringify(form.old_restaurant))
+      data.append("update_restaurant", JSON.stringify(form.update_restaurant))
 
       if (img) {
         data.append("file", img);
       }
 
-      const result = await restaurantAPI.create(data)
-      alert(result)
-
+      const result = await restaurantAPI.updateRestaurant(data)
       setForm({
-        name: "",
-        description: "",
-        address: "",
-        opening_hours: "",
-        closing_hours: "",
-        is_active: true
+        old_restaurant: {
+          restaurant_id: id,
+          owner_id: 0,
+          name: "",
+          description: "",
+          address: "",
+          opening_hours: "",
+          closing_hours: "",
+          is_active: "",
+          img: "",
+          created_at: "",
+          update_at: ""
+        },
+        update_restaurant: {
+          name: "",
+          description: "",
+          address: "",
+          opening_hours: "",
+          closing_hours: "",
+          is_active: "",
+        }
       })
       setImg(null)
       navigate("/restaurants")
@@ -118,45 +147,45 @@ export default function EditRestaurant() {
       <Input
         type="text"
         placeholder="Nombre del restaurante"
-        value={form.name}
-        onChange={(e) => setForm(prevState => ({ ...prevState, name: e.target.value }))}
+        value={form.update_restaurant.name}
+        onChange={(e) => setForm(prevState => ({ ...prevState, update_restaurant: { ...prevState.update_restaurant, name: e.target.value } }))}
         required
       />
       <Input
         type="text"
         placeholder="Descripcion"
-        value={form.description}
-        onChange={(e) => setForm(prevState => ({ ...prevState, description: e.target.value }))}
+        value={form.update_restaurant.description}
+        onChange={(e) => setForm(prevState => ({ ...prevState, update_restaurant: { ...prevState.update_restaurant, description: e.target.value } }))}
       />
       <Input
         type="text"
         placeholder="Dirección"
-        value={form.address}
-        onChange={(e) => setForm(prevState => ({ ...prevState, address: e.target.value }))}
+        value={form.update_restaurant.address}
+        onChange={(e) => setForm(prevState => ({ ...prevState, update_restaurant: { ...prevState.update_restaurant, address: e.target.value } }))}
         required
       />
-      <Select value={form.opening_hours} onChange={(e) => setForm(prevState => ({ ...prevState, opening_hours: e.target.value }))}>
+      <Select value={form.update_restaurant.opening_hours} onChange={(e) => setForm(prevState => ({ ...prevState, update_restaurant: { ...prevState.update_restaurant, opening_hours: e.target.value } }))}>
         <option value=""> Seleccione hora de apertura</option>
         {hoursOptions}
       </Select>
-      <Select value={form.closing_hours} onChange={(e) => setForm(prevState => ({ ...prevState, closing_hours: e.target.value }))}>
+      <Select value={form.update_restaurant.closing_hours} onChange={(e) => setForm(prevState => ({ ...prevState, update_restaurant: { ...prevState.update_restaurant, closing_hours: e.target.value } }))}>
         <option value=""> Seleccione hora de cierre</option>
         {hoursOptions}
       </Select>
-      <Select value={form.is_active} onChange={(e) => setForm(prevState => ({ ...prevState, is_active: e.target.value }))}>
+      <Select value={form.update_restaurant.is_active} onChange={(e) => setForm(prevState => ({ ...prevState, update_restaurant: { ...prevState.update_restaurant, is_active: e.target.value === "true" } }))}>
         <option value=""> Seleccione estado</option>
-        <option value={true}>Activo</option>
-        <option value={false}>Inactivo</option>
+        <option value="true">Activo</option>
+        <option value="false">Inactivo</option>
       </Select>
 
-      <ImgStyled src={form.img? form.img: imgPlaceholder} alt={form.name} />
+      <ImgStyled src={form.old_restaurant.img ? form.old_restaurant.img : imgPlaceholder} alt={form.old_restaurant.name} />
       <Input
         type="file"
         placeholder="Imagen"
         accept="image/*"
         onChange={(e) => setImg(e.target.files[0])}
       />
-      
+
       <Boton type="submit"> Guardar cambios </Boton>
     </Form>
   );

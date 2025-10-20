@@ -1,5 +1,5 @@
 import { MessageInterface } from "../interfaces/message.interface.js";
-import { RestaurantCreateInterface, RestaurantInterface,RestaurantDeleteInterface,RestaurantGetInterface } from "../interfaces/restaurant.interface.js";
+import { RestaurantCreateInterface, RestaurantInterface,RestaurantDeleteInterface,RestaurantGetInterface, RestaurantUpdateInterface } from "../interfaces/restaurant.interface.js";
 import RestaurantModel from "../models/Restaurant.model.js";
 import UserModel from "../models/User.model.js";
 import { UserRole } from "../interfaces/user.interface.js";
@@ -31,6 +31,15 @@ class RestaurantService {
 
     public async getRestaurantById(restaurant_id: number):Promise<RestaurantInterface>{
         return await this.restaurantModel.getRestaurantById(restaurant_id);
+    }
+    public async updateRestaurant(restaurants: RestaurantUpdateInterface){
+        if(!restaurants.update_restaurant.img){
+            restaurants.update_restaurant.img = restaurants.old_restaurant.img;
+        }
+        restaurants.update_restaurant.update_at = new Date().toISOString();
+        restaurants.update_restaurant.restaurant_id = restaurants.old_restaurant.restaurant_id;
+        restaurants.update_restaurant.owner_id = restaurants.old_restaurant.owner_id;
+        return await this.restaurantModel.updateRestaurant(restaurants.update_restaurant);
     }
 
 }

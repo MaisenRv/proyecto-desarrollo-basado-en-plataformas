@@ -32,18 +32,29 @@ export const restaurantAPI = {
             ENDPOINTS.restaurant.delete,
             {
                 method: "delete",
-                body:JSON.stringify({restaurant_id:restaurant_id}),
+                body: JSON.stringify({ restaurant_id: restaurant_id }),
                 credentials: "include"
             }
         ),
-    getRestaurantById: (restaurant_id) => 
+    getRestaurantById: (restaurant_id) =>
         fetchWrapper(
             ENDPOINTS.restaurant.getOne,
             {
                 method: "post",
-                body:JSON.stringify({restaurant_id:parseInt(restaurant_id)}), 
+                body: JSON.stringify({ restaurant_id: parseInt(restaurant_id) }),
                 credentials: "include"
             }
+        ),
+    updateRestaurant: (data) =>
+        fetchWrapper(
+            ENDPOINTS.restaurant.update,
+            {
+                method: "put",
+                body: data,
+                credentials: "include"
+            },
+            "multipart/form-data"
         )
+
 
 }

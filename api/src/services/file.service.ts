@@ -22,6 +22,7 @@ class FileService {
     }
 
     public static async deleteObject(objectName: string) {
+        if (!objectName) {return ""}
         return await minioClient.removeObject(FileService.BUCKET, objectName);
     }
 

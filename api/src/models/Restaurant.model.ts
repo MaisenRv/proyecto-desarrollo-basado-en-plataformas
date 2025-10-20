@@ -1,6 +1,6 @@
 import pool from "../config/database.js";
 import { UserRole } from "../interfaces/user.interface.js";
-import { RestaurantInterface, RestaurantCreateInterface, RestaurantDeleteInterface, RestaurantGetInterface } from "../interfaces/restaurant.interface.js";
+import { RestaurantInterface, RestaurantCreateInterface, RestaurantDeleteInterface, RestaurantGetInterface,RestaurantUpdateInterface } from "../interfaces/restaurant.interface.js";
 import { QueryResult } from "pg";
 import AppError from "../utils/AppError.js";
 import { MessageInterface } from "../interfaces/message.interface.js";
@@ -11,6 +11,36 @@ class RestaurantModel {
         try {
             const result: QueryResult = await pool.query('SELECT * FROM restaurant WHERE is_active = true');
             return result.rows;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async updateRestaurant(restaurant: RestaurantInterface): Promise<number> {
+        try {
+
+            const result: QueryResult = await pool.query(
+                'UPDATE restaurant SET name=$1,description=$2,address=$3,opening_hours=$4,closing_hours=$5,img=$6,is_active=$7,update_at=$8 WHERE restaurant_id =$9 AND owner_id=$10',
+                [
+                    restaurant.name,
+                    restaurant.description,
+                    restaurant.address,
+                    restaurant.opening_hours,
+                    restaurant.closing_hours,
+                    restaurant.img,
+                    restaurant.is_active,
+                    restaurant.update_at,
+                    restaurant.restaurant_id,
+                    restaurant.owner_id
+                ]
+            );
+
+            const re = result.rowCount;
+            if (!re) {
+                throw new AppError("NO se pudo actualizar el restaurante", 400);
+            }
+
+            return re;
         } catch (error) {
             throw error;
         }
@@ -67,8 +97,8 @@ class RestaurantModel {
         }
     }
 
-    public async getRestaurantById(restaurant_id: number):Promise<RestaurantInterface> {
-        try {    
+    public async getRestaurantById(restaurant_id: number): Promise<RestaurantInterface> {
+        try {
             const result: QueryResult<RestaurantInterface> = await pool.query(
                 "select * from restaurant where restaurant_id = $1",
                 [restaurant_id]

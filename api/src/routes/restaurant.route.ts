@@ -6,7 +6,7 @@ import { RestaurantCreateSchema, RestaurantUpdateSchema, RestaurantDeleteSchema,
 import { upload } from "../types/img.type.js";
 import { authMiddleware, authorize } from "../middleware/Auth.middleware.js";
 import { Roles } from "../types/auth.type.js";
-
+import { parseJsonFieldsRestaurantUpdate } from "../middleware/ParseJsonFields.middleware.js";
 
 const restaurantController = new RestaurantController();
 const restaurantRouter = Router();
@@ -29,6 +29,8 @@ restaurantRouter.put(
     ROUTES.restaurants.update,
     authMiddleware,
     authorize([Roles.OWNER, Roles.ADMIN]),
+    upload.single("file"),
+    parseJsonFieldsRestaurantUpdate,
     validate(RestaurantUpdateSchema),
     restaurantController.updateRestaurant
 );

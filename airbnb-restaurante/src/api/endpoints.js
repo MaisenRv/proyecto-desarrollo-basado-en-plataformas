@@ -12,6 +12,7 @@ export const ENDPOINTS = {
         create: `${API_BASE}/restaurants/create`,
         getMeRestaurants: `${API_BASE}/restaurants/meRestaurants`,
         delete: `${API_BASE}/restaurants/delete`,
-        getOne: `${API_BASE}/restaurants/getRestaurantById`
+        getOne: `${API_BASE}/restaurants/getRestaurantById`,
+        update: `${API_BASE}/restaurants/update`
     }
 }

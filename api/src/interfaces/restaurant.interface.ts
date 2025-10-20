@@ -11,6 +11,11 @@ export interface RestaurantInterface {
   created_at: string;
   update_at: string;
 }
+export interface RestaurantUpdateInterface{
+  old_restaurant:RestaurantInterface,
+  update_restaurant:RestaurantInterface
+}
+
 
 export interface RestaurantCreateInterface {
   owner_id: number;

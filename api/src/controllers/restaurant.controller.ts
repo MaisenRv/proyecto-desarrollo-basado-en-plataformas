@@ -6,7 +6,7 @@ import FileService from "../services/file.service.js";
 class RestaurantController {
     private restaurantService = new RestaurantService();
 
-    public getAllRestaurats = async (req: Request, res: Response, next:NextFunction) => {
+    public getAllRestaurats = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const restaurants = await this.restaurantService.getAllRestaurants();
             res.status(200).json({ restaurants })
@@ -36,16 +36,32 @@ class RestaurantController {
         } catch (error) { next(error); }
     }
 
-    public updateRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+    public updateRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) => {
         try {
+            
+            let image_object: string | null = null;
+            let image_url: string | null = null;
+
+            if (req.file) {
+                const objectName = req.body.old_restaurant.img.split("/uploads/")[1];
+                await FileService.deleteObject(objectName!);
+
+                const upload = await FileService.uploadBuffer(req.file.buffer, req.file.originalname, req.file.mimetype);
+                image_object = upload.objectName;
+                image_url = upload.publicUrl;
+            }
+            req.body.update_restaurant.img = image_url;
+            const restaurant = await this.restaurantService.updateRestaurant(req.body);
+
+            res.status(200).json({ restaurant })
 
         } catch (error) { next(error); }
     }
 
     public deleteRestaurant = async (req: AuthRequest, res: Response, next: NextFunction) => {
-        try {            
+        try {
             const restaurantToDelete = await this.restaurantService.getRestaurantById(req.body.restaurant_id);
-            if (restaurantToDelete.img){
+            if (restaurantToDelete.img) {
                 const objectName = restaurantToDelete.img.split("/uploads/")[1];
                 await FileService.deleteObject(objectName!);
             }
@@ -54,15 +70,15 @@ class RestaurantController {
         } catch (error) { next(error); }
     }
 
-    public getMeRestaurants = async (req: AuthRequest, res: Response, next: NextFunction) =>{
+    public getMeRestaurants = async (req: AuthRequest, res: Response, next: NextFunction) => {
         try {
-            const result = await this.restaurantService.getMeRestaurants({user_id: req.user!.user_id, role: req.user!.role });
+            const result = await this.restaurantService.getMeRestaurants({ user_id: req.user!.user_id, role: req.user!.role });
 
             res.status(200).json(result)
         } catch (error) { next(error); }
     }
 
-    public getRestaurantById = async (req: AuthRequest, res: Response, next: NextFunction) =>{
+    public getRestaurantById = async (req: AuthRequest, res: Response, next: NextFunction) => {
         try {
             const result = await this.restaurantService.getRestaurantById(req.body.restaurant_id);
             res.status(200).json(result)
