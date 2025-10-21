@@ -45,7 +45,10 @@ const Header = () => {
                     </ContainerRight>
                     :
                     <UserMenu key="userMenu">
-                        <AMenu $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AMenu>
+                        {user.role === "consumer"?
+                            null:
+                            <AMenu $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AMenu>
+                        }
                         <AMenu $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AMenu>
                     </UserMenu>
 

@@ -106,6 +106,7 @@ function Card({restaurant_id,nombre, descripción, direccion, imagen, horarioApe
                             (
                                 <Menu>
                                     <AMenu $menu to={`/editRestaurants/${restaurant_id}`}>Editar</AMenu>
+                                    <AMenu $menu to={`/restaurantsTables/${restaurant_id}`}>Mesas</AMenu>
                                     <AMenu $menu onClick={onDelete}>Eliminar</AMenu>
                                 </Menu>
                             )

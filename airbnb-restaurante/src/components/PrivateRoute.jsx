@@ -8,7 +8,7 @@ function PrivateRoute({ children }) {
   const navigate = useNavigate();
 
   if (!user) {
-    navigate('/')
+    return <Navigate to="/" replace />;
   }
 
   return children;

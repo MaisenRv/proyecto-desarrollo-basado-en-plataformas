@@ -14,5 +14,12 @@ export const ENDPOINTS = {
         delete: `${API_BASE}/restaurants/delete`,
         getOne: `${API_BASE}/restaurants/getRestaurantById`,
         update: `${API_BASE}/restaurants/update`
+    },
+    table:{
+        getMeTables: `${API_BASE}/table/meTables`,
+        getTableById: `${API_BASE}/table/getTableById`,
+        create: `${API_BASE}/table/create`,
+        update: `${API_BASE}/table/update`,
+        delete: `${API_BASE}/table/delete`
     }
 }

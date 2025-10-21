@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  width: 100%;
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || 'none'};
   padding: 0.9rem;
-  background: var(--bittersweet);
+  background: ${props => props.background || 'var(--raisin-black)'};
   color: var(--antiflash-white);
-  font-size: 1rem;
+  font-size: ${props => props.fontSize || '1rem'};
   font-weight: bold;
   border: none;
   border-radius: 10px;
@@ -19,9 +20,9 @@ const Button = styled.button`
   }
 `;
 
-const Boton = ({children, type, handleClick}) =>{
+const Boton = ({children, type, handleClick, height, width, background, fontSize}) =>{
     return(
-        <Button type={type} onClick={handleClick}>{children}</Button>
+        <Button type={type} onClick={handleClick} height={height} width={width} background={background} fontSize={fontSize}>{children}</Button>
     )
 }
 

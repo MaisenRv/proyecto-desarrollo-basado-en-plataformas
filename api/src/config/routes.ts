@@ -1,21 +1,29 @@
 const ROUTES = {
-    base:"/api",
-    users:{
+    base: "/api",
+    users: {
         base: "/users",
         create: "/create",
         login: "/login",
-        me:"/me",
-        logout:"/logout",
+        me: "/me",
+        logout: "/logout",
         list: "/"
     },
-    restaurants:{
-        base:"/restaurants",
+    restaurants: {
+        base: "/restaurants",
         create: "/create",
         update: "/update",
         delete: "/delete",
-        list:"/",
+        list: "/",
         getMeRestaurants: "/meRestaurants",
-        getRestaurantById: "/getRestaurantById"
+        getRestaurantById: "/getRestaurantById",
+    },
+    tables: {
+        base: "/table",
+        getByRestaurantId: "/meTables",
+        getById: "/getTableById",
+        create: "/create",
+        update: "/update",
+        delete: "/delete",
     }
 };
 

@@ -8,7 +8,8 @@ const Boton = styled.button`
     transition: all .3s ease-in-out;
     box-sizing: border-box;
     cursor: pointer;
-    height: 340px;
+    height: ${({height}) => height? height:"340px" };
+    width: ${({width}) => width? width:"none" };
     color: white;
     font-size: 2rem;
     &:hover{
@@ -18,10 +19,10 @@ const Boton = styled.button`
 `
 
 
-const ActivateBoton = ({children, onClick}) =>{
+const ActivateBoton = ({children, onClick, height,width}) =>{
 
     return(
-        <Boton onClick={onClick}>
+        <Boton onClick={onClick} height={height} width={width}>
             {children}
         </Boton>
     )

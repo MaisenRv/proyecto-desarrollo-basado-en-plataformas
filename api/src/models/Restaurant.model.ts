@@ -4,7 +4,7 @@ import { RestaurantInterface, RestaurantCreateInterface, RestaurantDeleteInterfa
 import { QueryResult } from "pg";
 import AppError from "../utils/AppError.js";
 import { MessageInterface } from "../interfaces/message.interface.js";
-import { console } from "inspector";
+
 
 class RestaurantModel {
     public async getAllRestaurants(): Promise<RestaurantInterface[]> {
@@ -73,7 +73,6 @@ class RestaurantModel {
 
 
     public async deleteRestaurant(restaurantId: RestaurantDeleteInterface): Promise<MessageInterface> {
-        console.log(restaurantId);
         const result = await pool.query(
             'DELETE FROM restaurant WHERE restaurant_id = $1',
             [restaurantId.restaurant_id]
