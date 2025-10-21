@@ -53,7 +53,7 @@ restaurantRouter.get(
 restaurantRouter.post(
     ROUTES.restaurants.getRestaurantById,
     authMiddleware,
-    authorize([Roles.OWNER,Roles.ADMIN]),
+    authorize([Roles.OWNER,Roles.ADMIN,Roles.CONSUMER]),
     restaurantController.getRestaurantById
 )
 

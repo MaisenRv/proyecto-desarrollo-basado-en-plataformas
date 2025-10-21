@@ -21,5 +21,9 @@ export const ENDPOINTS = {
         create: `${API_BASE}/table/create`,
         update: `${API_BASE}/table/update`,
         delete: `${API_BASE}/table/delete`
+    },
+    reservation:{
+        getByRestaurantId: `${API_BASE}/reservation/getByRestaurantId`,
+        create: `${API_BASE}/reservation/create`,
     }
 }

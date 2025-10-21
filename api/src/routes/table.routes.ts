@@ -11,7 +11,7 @@ const tableController = new TableController();
 tableRouter.post(
     ROUTES.tables.getByRestaurantId,
     authMiddleware,
-    authorize([Roles.OWNER, Roles.ADMIN]),
+    authorize([Roles.OWNER, Roles.ADMIN, Roles.CONSUMER]),
     validate(TablesByRestaurantSchema),
     tableController.getByRestaurantId
 );

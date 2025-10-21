@@ -26,8 +26,9 @@ CREATE TABLE IF NOT EXISTS "reservation" (
   "restaurant_id" int NOT NULL,
   "table_id" int NOT NULL,
   "reservation_data" date NOT NULL,
-  "reservation_time" date NOT NULL,
+  "reservation_time" varchar NOT NULL,
   "costumer_name" varchar NOT NULL,
+  "consumer_id" int NOT NULL,
   "created_at" timestamp NOT NULL DEFAULT (now()),
   "update_at" timestamp NOT NULL DEFAULT (now())
 );
@@ -95,3 +96,5 @@ ALTER TABLE "restaurant_category" ADD FOREIGN KEY ("category_id") REFERENCES "ca
 ALTER TABLE "review" ADD FOREIGN KEY ("consumer_id") REFERENCES "consumer" ("consumer_id");
 
 ALTER TABLE "admin" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("user_id");
+
+ALTER TABLE "reservation" ADD FOREIGN KEY ("consumer_id") REFERENCES "consumer" ("consumer_id");

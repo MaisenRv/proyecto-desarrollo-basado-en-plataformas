@@ -56,11 +56,11 @@ const CardSpan = styled.span`
     color: var(--antiflash-white);
 `
 
-function PublicCard({ nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive }) {
+function PublicCard({ nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive, onClick }) {
     const [open,setOpen] = useState(false)
 
     return (
-        <CardStyled >
+        <CardStyled onClick={onClick}>
             <CardImgStyled src={imagen} alt={nombre} />
             <div>
                 <CardTitleStyled >{nombre}</CardTitleStyled>

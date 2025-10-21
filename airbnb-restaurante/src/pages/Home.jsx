@@ -1,11 +1,27 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { restaurantAPI } from "../api/restaurant.api"
 import imgPlaceholder from "../assets/imagen.png"
 import PublicCard from "../components/PublicCard"
 import GridContainer from "../components/GridContainer"
+import { AuthContext } from "../providers/AuthProvider"
+import { useNavigate } from "react-router-dom"
 
 const Home = () => {
     const [restaurants, setRestaurants] = useState([])
+    const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        getRestaurants()
+    }, [])
+    const handleCardClick = (restaurant) => {
+        if (!user) {
+            alert("Por favor, inicie sesión para hacer una reserva.")
+            return
+        }
+        navigate(`/crearReserva/${restaurant.restaurant_id}`)
+    }
 
     const getRestaurants = async () => {
         const result = await restaurantAPI.getAll()
@@ -21,6 +37,7 @@ const Home = () => {
                         horarioApertura={restaurant.opening_hours}
                         horarioCierre={restaurant.closing_hours}
                         isActive={restaurant.is_active}
+                        onClick={() => handleCardClick(restaurant)}
                     />
                 ))
             )
@@ -29,9 +46,7 @@ const Home = () => {
         setRestaurants(["NO existen restaurantes"])
     }
 
-    useEffect(() => {
-        getRestaurants()
-    }, [])
+
 
     return (
         <GridContainer>
