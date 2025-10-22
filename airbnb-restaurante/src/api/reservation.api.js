@@ -17,7 +17,16 @@ export const reservationAPI = {
             ENDPOINTS.reservation.create,
             {
                 method: "POST",
-                body: data,
+                body: JSON.stringify(data),
+                credentials: "include"
+            }
+        ),
+    getByDate: (restaurant_id, date) =>
+        fetchWrapper(
+            ENDPOINTS.reservation.getByDate,
+            {
+                method: "POST",
+                body: JSON.stringify({ restaurant_id: parseInt(restaurant_id), date }),
                 credentials: "include"
             }
         ),

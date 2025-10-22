@@ -6,7 +6,8 @@ import { restaurantAPI } from "../api/restaurant.api";
 import styled from "styled-components";
 import Boton from '../components/Boton';
 import ActivateBoton from '../components/ActivateBoton';
-
+import Input from '../components/Input';
+import { useNavigate } from "react-router-dom";
 
 const Wrap = styled.div`
   width: 100%;
@@ -91,19 +92,19 @@ const ContainerCotrols = styled.div`
 
 const CrearReserva = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+
     const [tables, setTables] = useState([])
     const [reservations, setReservations] = useState([])
     const [restaurant, setRestaurant] = useState(null)
     const [hoursOptions, setHoursOptions] = useState([])
 
-    const getReservations = async () => {
-        try {
-            const result = await reservationAPI.getByRestaurantId(id);
-            setReservations(result);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+    const [tableTimeSelected, setTableTimeSelected] = useState({
+        table_id: null,
+        time: "",
+        selected: false
+    })
 
     const getTables = async (id) => {
         try {
@@ -128,7 +129,6 @@ const CrearReserva = () => {
         const startHour = parseInt(start.split(":")[0])
         const endHour = parseInt(end.split(":")[0])
         const startMinutes = parseInt(start.split(":")[1])
-        const endMinutes = parseInt(end.split(":")[1])
 
         const hours = []
         for (let i = startHour; i < endHour + 1; i++) {
@@ -143,10 +143,38 @@ const CrearReserva = () => {
         }
         setHoursOptions(hours)
     }
+
+    const handleBackButton = () => {
+        navigate(-1);
+    }
+
+    const handleCreateReservation = async () => {
+        try {
+            const result = await reservationAPI.create({
+                restaurant_id: parseInt(id),
+                table_id: tableTimeSelected.table_id,
+                reservation_data: date,
+                reservation_time: tableTimeSelected.time,
+            })
+            alert("Reserva creada con exito");
+            setReservations([...reservations, {
+                table_id: tableTimeSelected.table_id,
+                reservation_time: tableTimeSelected.time,
+            }]);
+            setTableTimeSelected({
+                table_id: null,
+                time: "",
+                selected: false
+            });
+            navigate(-1);
+        } catch (error) {
+            alert("Error al crear la reserva");
+        }
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await getReservations();
                 await getTables(id);
                 await getRestaurant(id);
 
@@ -155,13 +183,30 @@ const CrearReserva = () => {
         fetchData();
     }, [id]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await reservationAPI.getByDate(id, date).then((res) => {
+                    setReservations(res.data);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [date, id]);
+
 
     return (
         <Container>
             <h1>Crear Reserva</h1>
-            <ContainerCotrols>
-                <Boton>Volver</Boton>
-            </ContainerCotrols>
+            <Input
+                type="date"
+                width={"30%"}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+            />
             <Wrap>
                 <StyledTable>
                     <thead>
@@ -181,22 +226,45 @@ const CrearReserva = () => {
                             </tr>
                             :
                             tables.map((table) => (
-                                table.available ? 
-                                <tr key={table.table_id}>
-                                    <Td>{table.name}</Td>
-                                    {
-                                        hoursOptions.map((hour) => (
-                                            <Th key={hour}><ReservationCell $aviable>{hour}</ReservationCell></Th>
-                                        ))
-                                    }
-                                </tr>
-                                :
-                                null
+                                table.available ?
+                                    <tr key={table.table_id}>
+                                        <Td>{table.name}</Td>
+                                        {
+                                            hoursOptions.map((hour) => {
+                                                const isReserved = reservations.some((reservation) => reservation.table_id === table.table_id && reservation.reservation_time === hour);
+                                                if (isReserved) {
+                                                    return <Th key={hour}><ReservationCell>Reservado</ReservationCell></Th>
+                                                }
+                                                return <Th key={hour}>
+                                                    <ReservationCell
+                                                        $aviable={
+                                                            !(tableTimeSelected.selected &&
+                                                            tableTimeSelected.time === hour &&
+                                                            tableTimeSelected.table_id === table.table_id)
+                                                        }
+                                                        onClick={() =>
+                                                            {setTableTimeSelected({ 
+                                                                table_id: table.table_id, 
+                                                                time: hour, selected: !tableTimeSelected.selected 
+                                                            })
+                                                        }
+                                                        } >{hour}
+                                                    </ReservationCell>
+                                                </Th>
+                                            })
+                                        }
+                                    </tr>
+                                    :
+                                    null
                             ))
                         }
                     </tbody>
                 </StyledTable>
             </Wrap>
+            <ContainerCotrols>
+                <Boton width={"50%"} handleClick={handleBackButton}>Volver</Boton>
+                <ActivateBoton width={"50%"} height={"none"} onClick={handleCreateReservation}>Crear</ActivateBoton>
+            </ContainerCotrols>
         </Container>
     )
 }

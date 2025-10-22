@@ -26,5 +26,10 @@ export interface UserRole{
     role:string
 }
 
+export interface jwtPayload{
+    user_id: string,
+    username: string,
+    role:string
+}
 
 

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const InputStyled = styled.input`
-  width: 92%;
+  width: ${props => props.width || '92%'};
   padding: 0.9rem;
   margin-bottom: 1rem;
   border: 1px solid var(--vivid-sky-blue);
@@ -16,7 +16,7 @@ const InputStyled = styled.input`
 `;
 
 
-const Input = ({type,placeholder,value,onChange,required}) => {
+const Input = ({type,placeholder,value,onChange,required, width }) => {
     return (
         <InputStyled 
             type={type}
@@ -24,6 +24,7 @@ const Input = ({type,placeholder,value,onChange,required}) => {
             value={value}
             onChange={onChange}
             required= {required}
+            width={width}
         />
     )
 }

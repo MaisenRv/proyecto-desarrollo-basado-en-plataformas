@@ -24,4 +24,11 @@ reservationRouter.post(
     reservationController.createReservation
 );
 
+reservationRouter.post(
+    ROUTES.reservations.getByDate,
+    authMiddleware,
+    authorize([Roles.OWNER, Roles.ADMIN, Roles.CONSUMER]),
+    reservationController.getReservationsByDate
+);
+
 export default reservationRouter;

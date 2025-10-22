@@ -29,6 +29,7 @@ const ROUTES = {
         base: "/reservation",
         getByRestaurantId: "/getByRestaurantId",
         create: "/create",
+        getByDate: "/getByDate",
     }
 };
 

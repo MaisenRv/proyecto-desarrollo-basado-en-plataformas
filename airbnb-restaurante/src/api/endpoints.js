@@ -25,5 +25,6 @@ export const ENDPOINTS = {
     reservation:{
         getByRestaurantId: `${API_BASE}/reservation/getByRestaurantId`,
         create: `${API_BASE}/reservation/create`,
+        getByDate: `${API_BASE}/reservation/getByDate`
     }
 }
