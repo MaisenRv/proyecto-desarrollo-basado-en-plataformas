@@ -1,9 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from "styled-components";
 import ActivateBoton from '../components/ActivateBoton';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { tableAPI } from '../api/table.api';
 import Boton from '../components/Boton';
+import {AuthContext} from "../providers/AuthProvider"
 
 const Wrap = styled.div`
   width: 100%;
@@ -87,6 +88,7 @@ const ContainerCotrols = styled.div`
 const MeTables = () => {
   const [tables, setTables] = useState([])
   const { id } = useParams()
+  const { user } = useContext(AuthContext)
 
   const getTables = async (id) => {
     const result = await tableAPI.getMeTables(id)
@@ -95,6 +97,10 @@ const MeTables = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (user.role != "owner"){
+      navigate("/")
+    }
+
     const fectchData = async () => {
       try {
         await getTables(id);

@@ -23,17 +23,17 @@ function App() {
         {/* USER */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin" element={<PrivateRoute><AdminHome/></PrivateRoute>} />
+        <Route path="/admin" element={<PrivateRoute><AdminHome /></PrivateRoute>} />
         {/* RESTAURANT */}
-        <Route path="/createRestaurant" element={<PrivateRoute><CreateRestaurant/></PrivateRoute>}  />
-        <Route path="/editRestaurants/:id" element={<PrivateRoute><EditRestaurant/></PrivateRoute>}/>
-        <Route path="/restaurants" element={<PrivateRoute><MeRestaurants/></PrivateRoute>}/>
-        <Route path="/restaurantsTables/:id" element={<PrivateRoute><MeTables/></PrivateRoute>}/>
+        <Route path="/createRestaurant" element={<PrivateRoute><CreateRestaurant /></PrivateRoute>} />
+        <Route path="/editRestaurants/:id" element={<PrivateRoute><EditRestaurant /></PrivateRoute>} />
+        <Route path="/restaurants" element={<PrivateRoute><MeRestaurants /></PrivateRoute>} />
+        <Route path="/restaurantsTables/:id" element={<PrivateRoute><MeTables /></PrivateRoute>} />
         {/* TABLE */}
-        <Route path="/createTable/:id" element={<PrivateRoute><CreateTable/></PrivateRoute>} />
-        <Route path="/editTable/:id" element={<PrivateRoute><EditTable/></PrivateRoute>} />
+        <Route path="/createTable/:id" element={<PrivateRoute><CreateTable /></PrivateRoute>} />
+        <Route path="/editTable/:id" element={<PrivateRoute><EditTable /></PrivateRoute>} />
         {/* RESERVATION */}
-        <Route path="/crearReserva/:id" element={<PrivateRoute><CrearReserva/></PrivateRoute>} />
+        <Route path="/crearReserva/:id" element={<PrivateRoute><CrearReserva /></PrivateRoute>} />
 
       </Route>
     </Routes>

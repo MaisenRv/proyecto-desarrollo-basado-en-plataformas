@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useParams,useNavigate } from "react-router-dom"
+import { useEffect, useState,useContext } from "react"
 import { reservationAPI } from "../api/reservation.api";
 import { tableAPI } from "../api/table.api";
 import { restaurantAPI } from "../api/restaurant.api";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Boton from '../components/Boton';
 import ActivateBoton from '../components/ActivateBoton';
 import Input from '../components/Input';
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Wrap = styled.div`
   width: 100%;
@@ -93,6 +93,7 @@ const ContainerCotrols = styled.div`
 const CrearReserva = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useContext(AuthContext)
 
     const [tables, setTables] = useState([])
     const [reservations, setReservations] = useState([])
@@ -150,13 +151,17 @@ const CrearReserva = () => {
 
     const handleCreateReservation = async () => {
         try {
+            if (tableTimeSelected.table_id == null || tableTimeSelected.time == "") {
+                alert("Seleccione una mesa y hora para la reserva");
+                return;
+            }
             const result = await reservationAPI.create({
                 restaurant_id: parseInt(id),
                 table_id: tableTimeSelected.table_id,
                 reservation_data: date,
                 reservation_time: tableTimeSelected.time,
             })
-            alert("Reserva creada con exito");
+            alert(result.msg);
             setReservations([...reservations, {
                 table_id: tableTimeSelected.table_id,
                 reservation_time: tableTimeSelected.time,
@@ -173,6 +178,10 @@ const CrearReserva = () => {
     }
 
     useEffect(() => {
+        if(user.role != "consumer"){
+            navigate("/restaurants")
+            return
+        }
         const fetchData = async () => {
             try {
                 await getTables(id);

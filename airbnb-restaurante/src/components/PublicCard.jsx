@@ -57,7 +57,6 @@ const CardSpan = styled.span`
 `
 
 function PublicCard({ nombre, descripción, direccion, imagen, horarioApertura, horarioCierre, isActive, onClick }) {
-    const [open,setOpen] = useState(false)
 
     return (
         <CardStyled onClick={onClick}>

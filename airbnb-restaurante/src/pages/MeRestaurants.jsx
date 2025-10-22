@@ -1,14 +1,16 @@
 import { restaurantAPI } from "../api/restaurant.api"
 import Card from "../components/Card"
-import { useEffect, useState } from "react"
+import { useEffect, useState,useContext } from "react"
 import GridContainer from "../components/GridContainer"
 import imgPlaceholder from "../assets/imagen.png"
 import ActivateBoton from "../components/ActivateBoton"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../providers/AuthProvider"
 
 const MeRestaurants = () => {
     const [restaurantes, setRestaurantes] = useState([])
     const navigate = useNavigate()
+    const {user} = useContext(AuthContext)
 
     const handleCrear = () => {
         navigate("/createRestaurant")
@@ -35,6 +37,10 @@ const MeRestaurants = () => {
     }
 
     useEffect(() => {
+        if(user.role != "owner"){
+            navigate("/")
+            return
+        }
         const fectchData = async () => {
             try {
                 await getRestaurants();

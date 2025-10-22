@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Form from "../components/Form";
 import Input from "../components/Input";
@@ -7,6 +7,7 @@ import Select from "../components/Select"
 import { restaurantAPI } from "../api/restaurant.api";
 import { useNavigate, useParams } from "react-router-dom";
 import imgPlaceholder from "../assets/imagen.png"
+import { AuthContext } from "../providers/AuthProvider";
 
 const Title = styled.h2`
   text-align: center;
@@ -24,6 +25,7 @@ const ImgStyled = styled.img`
 export default function EditRestaurant() {
   const navigate = useNavigate()
   const { id } = useParams()
+  const { user } = useContext(AuthContext)
   const [form, setForm] = useState({
     old_restaurant: {
       restaurant_id: id,
@@ -69,6 +71,12 @@ export default function EditRestaurant() {
   }
 
   useEffect(() => {
+    if (user.role != "owner"){
+      navigate("/")
+      return
+    }
+
+
     const hours = createHours()
     setHoursOptions(
       hours.map(hour => (
