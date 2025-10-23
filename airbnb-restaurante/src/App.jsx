@@ -13,6 +13,7 @@ import MeTables from "./pages/MeTables.jsx";
 import CreateTable from "./pages/CreateTable.jsx";
 import EditTable from "./pages/EditTable.jsx";
 import CrearReserva from "./pages/CrearRevervation.jsx";
+import MyReservations from "./pages/myReservations.jsx";
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
         <Route path="/editTable/:id" element={<PrivateRoute><EditTable /></PrivateRoute>} />
         {/* RESERVATION */}
         <Route path="/crearReserva/:id" element={<PrivateRoute><CrearReserva /></PrivateRoute>} />
-
+        <Route path="/myReservations" element={<PrivateRoute><MyReservations /></PrivateRoute>} />
       </Route>
     </Routes>
   );

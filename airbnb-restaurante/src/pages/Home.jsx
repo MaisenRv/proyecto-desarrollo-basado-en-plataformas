@@ -43,7 +43,7 @@ const Home = () => {
             )
             return
         }
-        setRestaurants(["NO existen restaurantes"])
+        setRestaurants(["Aun no existen restaurantes creados"])
     }
 
 

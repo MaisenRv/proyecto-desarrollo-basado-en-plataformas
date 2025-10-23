@@ -1,5 +1,5 @@
 import { AuthContext } from "../providers/AuthProvider"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { userApi } from "../api/user.api"
 import styled from "styled-components"
 import UserMenu from "../components/UserMenu"
@@ -28,6 +28,7 @@ const ContainerRight = styled.nav`
 
 const Header = () => {
     const { user, setUser } = useContext(AuthContext)
+
     const handleLogout = async () => {
         const result = await userApi.logout()
         alert(result.msg)
@@ -37,24 +38,36 @@ const Header = () => {
     return (
         <HeaderStyled>
             <NavStyled>
-                <AMenu key="home" to="/"> Home </AMenu>
-                {!user ?
+                <AMenu key="home" to="/"> Inicio </AMenu>
+                {!user ? (
                     <ContainerRight key="container">
-                        <AMenu key="register" to="/register"> Register </AMenu>
-                        <AMenu key="login" to="/login"> Login </AMenu>
+                        <AMenu key="register" to="/register"> Registro </AMenu>
+                        <AMenu key="login" to="/login"> Iniciar Sesion </AMenu>
                     </ContainerRight>
-                    :
+                ) : (
                     <UserMenu key="userMenu">
-                        {user.role === "consumer"?
-                            null:
-                            <AMenu $menu key="meRestaurant" to="/restaurants">Mis restaurantes </AMenu>
-                        }
-                        <AMenu $menu key="logout" to="/" onClick={handleLogout}> Cerrar sesion </AMenu>
+                        {user.role === "consumer" ? (
+                            <>
+                                {/* 🔹 Nuevo botón: Mis Reservas */}
+                                <AMenu $menu key="myReservations" to="/myReservations">
+                                    Mis Reservas
+                                </AMenu>
+                            </>
+                        ) : (
+                            <>
+                                <AMenu $menu key="meRestaurant" to="/restaurants">
+                                    Mis restaurantes
+                                </AMenu>
+                            </>
+                        )}
+                        <AMenu $menu key="logout" to="/" onClick={handleLogout}>
+                            Cerrar sesión
+                        </AMenu>
                     </UserMenu>
-
-                }
+                )}
             </NavStyled>
         </HeaderStyled>
     )
 }
-export default Header;
+
+export default Header

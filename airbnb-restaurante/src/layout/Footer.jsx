@@ -15,7 +15,7 @@ const FooterContainer = styled.footer`
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>© {new Date().getFullYear()} Restaurantes App. Todos los derechos reservados.</p>
+      <p>© {new Date().getFullYear()} PROYECTO AIRBNB RESTAURANTES.</p>
     </FooterContainer>
   );
 };

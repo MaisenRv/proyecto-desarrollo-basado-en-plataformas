@@ -9,6 +9,13 @@ import { authMiddleware,authorize } from "../middleware/Auth.middleware.js";
 const reservationController = new ReservationController();
 const reservationRouter = Router();
 
+reservationRouter.get(
+    "/myReservations",
+    authMiddleware,
+    authorize([Roles.CONSUMER, Roles.ADMIN, Roles.OWNER]),
+    reservationController.getMyReservations
+);
+
 reservationRouter.post(
     ROUTES.reservations.getByRestaurantId,
     authMiddleware,
