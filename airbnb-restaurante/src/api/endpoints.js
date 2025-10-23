@@ -16,16 +16,17 @@ export const ENDPOINTS = {
         update: `${API_BASE}/restaurants/update`
     },
     table:{
-        getMeTables: `${API_BASE}/tables/meTables`,
-        getTableById: `${API_BASE}/tables/getTableById`,
-        create: `${API_BASE}/tables/create`,
-        update: `${API_BASE}/tables/update`,
-        delete: `${API_BASE}/tables/delete`
+        getMeTables: `${API_BASE}/table/meTables`,
+        getTableById: `${API_BASE}/table/getTableById`,
+        create: `${API_BASE}/table/create`,
+        update: `${API_BASE}/table/update`,
+        delete: `${API_BASE}/table/delete`
     },
     reservation:{
         getByRestaurantId: `${API_BASE}/reservation/getByRestaurantId`,
         create: `${API_BASE}/reservation/create`,
         getByDate: `${API_BASE}/reservation/getByDate`,
-        getByUser: `${API_BASE}/reservation/myReservations`
+        getMyReservations: `${API_BASE}/reservation/myReservations`,
+        delete: `${API_BASE}/reservation/delete`
     }
 }

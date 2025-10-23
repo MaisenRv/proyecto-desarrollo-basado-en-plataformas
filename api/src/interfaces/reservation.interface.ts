@@ -1,3 +1,4 @@
+import { RestaurantInterface } from "./restaurant.interface";
 
 export interface ReservationInterface {
     reservation_id: number;
@@ -18,4 +19,9 @@ export interface ReservationCreateInterface {
     reservation_time: string;
     costumer_name: string;
     consumer_id: number;
+}
+
+export interface ReservationsGetMeConsumer {
+    restaurant : RestaurantInterface;
+    reservations : ReservationInterface[];
 }

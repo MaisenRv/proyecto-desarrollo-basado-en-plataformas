@@ -30,6 +30,8 @@ const ROUTES = {
         getByRestaurantId: "/getByRestaurantId",
         create: "/create",
         getByDate: "/getByDate",
+        getMyReservations: "/myReservations",
+        delete: "/delete",
     }
 };
 

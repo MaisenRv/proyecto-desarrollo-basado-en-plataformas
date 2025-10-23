@@ -30,4 +30,21 @@ export const reservationAPI = {
                 credentials: "include"
             }
         ),
+    getMyReservations: () =>
+        fetchWrapper(
+            ENDPOINTS.reservation.getMyReservations,
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        ),
+    delete: (reservation_id) =>
+        fetchWrapper(
+            ENDPOINTS.reservation.delete,
+            {
+                method: "DELETE",
+                body: JSON.stringify({ reservation_id: parseInt(reservation_id) }),
+                credentials: "include"
+            }
+        ),
 }

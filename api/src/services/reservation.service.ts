@@ -33,6 +33,19 @@ class ReservationService {
         }
         return message;
     }
+    public async getMyReservations(user_id: number): Promise<MessageInterface> {
+        const reservations = await this.reservationModel.getMyReservations(user_id);
+        const message:MessageInterface = {
+            msg: "Mis reservas obtenidas exitosamente",
+            data: reservations
+        }
+        return message;
+    }
+
+    public async deleteReservation(reservation_id: number): Promise<MessageInterface> {
+        const deletedReservation = await this.reservationModel.deleteReservation(reservation_id);
+        return deletedReservation;
+    }
 }
 
 export default ReservationService;
